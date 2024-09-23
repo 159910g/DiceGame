@@ -4,7 +4,57 @@ using UnityEngine;
 
 public class BattleSystem : MonoBehaviour
 {
-    //draw opening hand (5)
+    public BattleCharacter player;
+    public List<BattleCharacter> enemies;
+
+    [SerializeField] GameObject cardTemplate;
+    
+    List<Card> ActiveDeck;
+    List<SpawnableCard> spawnedDeck;
+    List<SpawnableCard> cardsInHand;
+
+    public void Start()
+    {
+        cardsInHand = new List<SpawnableCard>();
+        spawnedDeck = new List<SpawnableCard>();
+        SetupBattle();
+    }
+
+    public void SetupBattle()
+    {
+        ActiveDeck = Deck.Instance.ShuffleDeck();
+        foreach(Card c in ActiveDeck)
+        {
+            SpawnableCard card = Instantiate(cardTemplate, new Vector3(0,0,0), Quaternion.identity).GetComponent<SpawnableCard>();
+
+            card.Frame.sprite = c.Frame;
+            card.Name.text = c.Name;
+            card.gameObject.SetActive(false);
+
+            spawnedDeck.Add(card);
+
+            Debug.Log(c.Name);
+        }
+
+        DrawOpeningHand();
+    }
+
+    //draw opening hand (3)
+    public void DrawOpeningHand()
+    {
+        Draw();
+        Draw();
+        Draw();
+    }
+
+    //eventually this will take in a postion
+    public void Draw()
+    {
+        spawnedDeck[0].gameObject.SetActive(true);
+        cardsInHand.Add(spawnedDeck[0]);
+        spawnedDeck.RemoveAt(0);
+        SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
+    }
     //check item for mulligan
 
 

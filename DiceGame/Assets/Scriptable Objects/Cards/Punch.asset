@@ -20,3 +20,5 @@ MonoBehaviour:
   keywords: []
   keywordPotency: 
   targets: 000000000100000000
+  frame: {fileID: 1877939071, guid: 2a8934a1176f69548afdd775d1cad185, type: 3}
+  gridImage: {fileID: 0}

@@ -7,6 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class CardBase : ScriptableObject
 {
+    //frame, grid image
     [SerializeField] int atkEnergyCost;
 
     [SerializeField] int defEnergyCost;
@@ -25,6 +26,10 @@ public class CardBase : ScriptableObject
     //4 5 6
     //7 8 9
     [SerializeField] List<bool> targets;
+
+    [SerializeField] Sprite frame;
+
+    [SerializeField] Sprite gridImage;
 
     public int ATKEnergyCost
     {
@@ -46,7 +51,7 @@ public class CardBase : ScriptableObject
         get { return atkValue; }
     }
 
-    public int DEFEnergy
+    public int DEFValue
     {
         get { return defValue; }
     }
@@ -54,6 +59,26 @@ public class CardBase : ScriptableObject
     public List<bool> Targets
     {
         get { return targets; }
+    }
+
+    public List<string> Keywords
+    {
+        get { return keywords; }
+    }
+
+    public List<int> KeywordPotency
+    {
+        get { return keywordPotency; }
+    }
+
+    public Sprite Frame
+    {
+        get { return frame; }
+    }
+
+    public Sprite GridImage
+    {
+        get { return gridImage; }
     }
 
     public int GetKeywordValue(string keyword) //keyword
