@@ -151,8 +151,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14f450aeebd559e4d8b59fe6ec3b9a3b, type: 2}
+  m_sharedMaterial: {fileID: 4923431572635777869, guid: 14f450aeebd559e4d8b59fe6ec3b9a3b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -303,6 +303,7 @@ MonoBehaviour:
   Frame: {fileID: 2777096023114045678}
   GridImage: {fileID: 0}
   isHovered: 0
+  isSelected: 0
   startPos: {x: 0, y: 0, z: 0}
 --- !u!61 &-5577597386145935860
 BoxCollider2D:
