@@ -6,7 +6,13 @@ public class Deck : MonoBehaviour
 {
     [SerializeField] List<CardBase> rawCards;
 
+    [SerializeField] GameObject cardTemplate;
+
     public List<Card> PlayerDeck = new List<Card>();
+
+    public List<Card> ShuffledDeck = new List<Card>();
+
+    public List<SpawnableCard> spawnedDeck = new List<SpawnableCard>();
 
     public static Deck Instance { get; private set; }
 
@@ -21,24 +27,8 @@ public class Deck : MonoBehaviour
         foreach(CardBase rawCard in rawCards)
         {
             Card card = new Card();
-
-            card.Name = rawCard.name;
-
-            card.ATKEnergyCost = rawCard.ATKEnergyCost;
-            card.DEFEnergyCost = rawCard.DEFEnergyCost;
-            card.UTLEnergyCost = rawCard.UTLEnergyCost;
-
-            card.ATKValue = rawCard.ATKValue;
-            card.DEFValue = rawCard.DEFValue;
-
-            card.Targets = new List<bool>(rawCard.Targets); // Ensure lists are properly initialized
-            
-            card.Keywords = new List<string>(rawCard.Keywords);
-            card.KeywordPotency = new List<int>(rawCard.KeywordPotency);
-
-            card.GridImage = rawCard.GridImage;
-            card.Frame = rawCard.Frame;
-
+            card.cardBase = rawCard;
+            card.InitValues();
             PlayerDeck.Add(card);
         }
     }    
@@ -58,4 +48,30 @@ public class Deck : MonoBehaviour
 
         return ShuffledDeck;
     }
+
+    public void StartBattle()
+    {
+        ShuffledDeck = ShuffleDeck();
+        foreach(Card c in ShuffledDeck)
+        {
+            SpawnableCard card = Instantiate(cardTemplate, new Vector3(0,0,0), Quaternion.identity).GetComponent<SpawnableCard>();
+
+            card.Frame.sprite = c.Frame;
+            card.Name.text = c.Name;
+            card.gameObject.SetActive(false);
+
+            spawnedDeck.Add(card);
+
+            Debug.Log(c.Name);
+        }
+    }
+
+    public SpawnableCard Draw(int index=0)
+    {
+        spawnedDeck[index].gameObject.SetActive(true);
+        SpawnableCard cardDrawn = spawnedDeck[index];
+        spawnedDeck.RemoveAt(index);
+        return cardDrawn;
+    }
+
 }

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class BattleSystem : MonoBehaviour
 {
+    public static BattleSystem Instance;
     public BattleCharacter player;
     public List<BattleCharacter> enemies;
-
-    [SerializeField] GameObject cardTemplate;
     
     List<Card> ActiveDeck;
     List<SpawnableCard> spawnedDeck;
@@ -15,27 +14,17 @@ public class BattleSystem : MonoBehaviour
 
     public void Start()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         cardsInHand = new List<SpawnableCard>();
-        spawnedDeck = new List<SpawnableCard>();
         SetupBattle();
     }
 
     public void SetupBattle()
     {
-        ActiveDeck = Deck.Instance.ShuffleDeck();
-        foreach(Card c in ActiveDeck)
-        {
-            SpawnableCard card = Instantiate(cardTemplate, new Vector3(0,0,0), Quaternion.identity).GetComponent<SpawnableCard>();
-
-            card.Frame.sprite = c.Frame;
-            card.Name.text = c.Name;
-            card.gameObject.SetActive(false);
-
-            spawnedDeck.Add(card);
-
-            Debug.Log(c.Name);
-        }
-
+        Deck.Instance.StartBattle();
         DrawOpeningHand();
     }
 
@@ -44,17 +33,31 @@ public class BattleSystem : MonoBehaviour
     {
         Draw();
         Draw();
-        Draw();
     }
 
-    //eventually this will take in a postion
-    public void Draw()
+    public void Draw(int deckPos=0)
     {
-        spawnedDeck[0].gameObject.SetActive(true);
-        cardsInHand.Add(spawnedDeck[0]);
-        spawnedDeck.RemoveAt(0);
+        cardsInHand.Add(Deck.Instance.Draw(deckPos));
         SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
     }
+
+    public void SelectCard(SpawnableCard card)
+    {
+        foreach (SpawnableCard c in cardsInHand)
+        {
+            if (c != card)
+            {
+                c.isSelected = false;
+                c.OnMouseExit();
+            }
+            else 
+            {
+                c.isSelected = true;
+            }
+        }
+    }
+
+    //eventually this will take in a postio
     //check item for mulligan
 
 

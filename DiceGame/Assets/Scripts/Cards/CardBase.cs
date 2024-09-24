@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class CardBase : ScriptableObject
 {
-    //frame, grid image
+    [SerializeField] string Name;
     [SerializeField] int atkEnergyCost;
 
     [SerializeField] int defEnergyCost;
