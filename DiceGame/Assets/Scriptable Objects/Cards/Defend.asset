@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca4ee31683f9e8409cff26852cca4ff, type: 3}
   m_Name: Defend
   m_EditorClassIdentifier: 
+  Name: Defend
   atkEnergyCost: 0
   defEnergyCost: 2
   utlEnergyCost: 0
@@ -20,5 +21,5 @@ MonoBehaviour:
   keywords: []
   keywordPotency: 
   targets: 000000000100000000
-  frame: {fileID: -1394230338, guid: 2a8934a1176f69548afdd775d1cad185, type: 3}
+  frame: {fileID: 21300000, guid: 0efed38ed34c78e41bd3aab77851ea1e, type: 3}
   gridImage: {fileID: 0}

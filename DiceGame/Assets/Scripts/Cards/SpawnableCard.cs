@@ -7,15 +7,15 @@ using DG.Tweening;
 public class SpawnableCard : MonoBehaviour
 {
     public Card card;
-    public TextMeshProUGUI Name;
-    public TextMeshProUGUI ATKEnergyCost;
-    public TextMeshProUGUI DEFEnergyCost;
-    public TextMeshProUGUI UTLEnergyCost;
+    public TextMeshPro Name;
+    public TextMeshPro ATKEnergyCost;
+    public TextMeshPro DEFEnergyCost;
+    public TextMeshPro UTLEnergyCost;
 
-    public TextMeshProUGUI ATKValue;
-    public TextMeshProUGUI DEFValue;
+    public TextMeshPro ATKValue;
+    public TextMeshPro DEFValue;
 
-    public List<TextMeshProUGUI> Keywords;
+    public List<TextMeshPro> Keywords;
 
     public SpriteRenderer Frame;
     public SpriteRenderer GridImage;
