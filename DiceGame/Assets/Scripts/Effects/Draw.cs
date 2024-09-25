@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bleed : MonoBehaviour, KeywordInterface
+public class Draw : MonoBehaviour, KeywordInterface
 {
-    string keywordName = "Bleed";
-    string keywordDescription = "Add X stacks of Bleed to Target";
+    string keywordName = "Draw";
+    string keywordDescription = "Draw X cards from your deck";
 
     KeywordTier tier = KeywordTier.Tier1;
 

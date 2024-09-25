@@ -56,8 +56,8 @@ public class Deck : MonoBehaviour
         {
             SpawnableCard card = Instantiate(cardTemplate, new Vector3(0,0,0), Quaternion.identity).GetComponent<SpawnableCard>();
 
-            card.Frame.sprite = c.Frame;
-            card.Name.text = c.Name;
+            card.Init(c);
+
             card.gameObject.SetActive(false);
 
             spawnedDeck.Add(card);

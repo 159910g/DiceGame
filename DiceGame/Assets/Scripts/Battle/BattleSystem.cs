@@ -47,12 +47,12 @@ public class BattleSystem : MonoBehaviour
         {
             if (c != card)
             {
-                c.isSelected = false;
+                c.SetIsSelected(false);
                 c.OnMouseExit();
             }
             else 
             {
-                c.isSelected = true;
+                c.SetIsSelected(true);
             }
         }
     }
