@@ -22,11 +22,13 @@ public class SpawnableCard : MonoBehaviour
     public bool isHovered = false;
     public bool isSelected = false;
     public Vector3 startPos = new Vector3(0f, 0f, 0f);
+    public Vector3 startScale = new Vector3(0f, 0f, 0f);
 
 
     void Start()
     {
         startPos = transform.position;
+        startScale = transform.localScale;
     }
 
     void FixedUpdate()
@@ -42,7 +44,8 @@ public class SpawnableCard : MonoBehaviour
     public IEnumerator LookAtCard()
     {
         transform.DOMoveY(startPos.y + 40, 0.5f);
-        transform.DOMoveZ(startPos.z - 10, 0.5f);
+        transform.DOMoveZ(startPos.z - 1f, 0.5f);
+        transform.DOScale(startScale * 1.5f, 0.5f);
         yield return null;
     }
 
@@ -50,6 +53,7 @@ public class SpawnableCard : MonoBehaviour
     {
         transform.DOMoveY(startPos.y, 0.5f);
         transform.DOMoveZ(startPos.z, 0.5f);
+        transform.DOScale(startScale, 0.5f);
         yield return null;
     }
 
@@ -76,6 +80,7 @@ public class SpawnableCard : MonoBehaviour
         if (!isSelected)
         {
             BattleSystem.Instance.SelectCard(this);
+            if (isSelected) transform.DOMoveZ(startPos.z - 5f, 0.01f);
         }
     }
 }
