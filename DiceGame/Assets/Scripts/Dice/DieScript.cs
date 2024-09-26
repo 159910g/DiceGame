@@ -7,6 +7,7 @@ public class DieScript : MonoBehaviour
 {
     [SerializeField] DiceFaceBase[] faces;
     [SerializeField] TextMeshPro valueText;
+    [SerializeField] SpriteRenderer bg;
 
     public DieResult RollDie()
     {
@@ -14,6 +15,7 @@ public class DieScript : MonoBehaviour
 
         ///Animation???///
         valueText.text = Mathf.Max(faces[i].ATKEnergy, faces[i].DEFEnergy, faces[i].UTLEnergy).ToString();
+        bg.sprite = faces[i].DieBG;
 
         return new DieResult(
             faces[i].ATKEnergy,

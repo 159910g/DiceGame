@@ -17,6 +17,8 @@ public class DiceFaceBase : ScriptableObject
 
     [SerializeField] int effectPotency;
 
+    [SerializeField] Sprite dieBG;
+
     public int ATKEnergy
     {
         get { return atkEnergy; }
@@ -39,6 +41,11 @@ public class DiceFaceBase : ScriptableObject
     public int EffectPotency
     {
         get { return effectPotency; }
+    }
+
+    public Sprite DieBG
+    {
+        get { return dieBG; }
     }
 }
 
