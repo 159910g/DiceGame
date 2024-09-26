@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65e55afb4e233b44d91f2d2605a9d89d, type: 3}
-  m_Name: ATKEnergy
+  m_Name: 1DEFEnergy
   m_EditorClassIdentifier: 
-  atkEnergy: 1
-  defEnergy: 0
+  atkEnergy: 0
+  defEnergy: 1
   utlEnergy: 0
   effect: 0
   effectPotency: 0

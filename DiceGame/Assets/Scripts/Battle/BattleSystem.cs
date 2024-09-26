@@ -12,6 +12,9 @@ public class BattleSystem : MonoBehaviour
     List<SpawnableCard> spawnedDeck;
     List<SpawnableCard> cardsInHand;
 
+    public List<DieScript> dice;
+    [SerializeField] Energy energy;
+
     public void Start()
     {
         if (Instance == null)
@@ -57,9 +60,18 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    //eventually this will take in a postio
-    //check item for mulligan
+    public void RollDice()
+    {
+        foreach (DieScript die in dice)
+        {
+            DieResult result = die.RollDie();
+            energy.ChangeEnergy(result.ATKEnergy, result.DEFEnergy, result.UTLEnergy);
 
+            //Handle Effects
+        }
+    }
+
+    //check item for mulligan
 
     //**START OF PLAYER TURN**
 
