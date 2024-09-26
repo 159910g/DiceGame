@@ -117,6 +117,7 @@ public class SpawnableCard : MonoBehaviour
         {
             Debug.Log("Pressed Right Click");
             SetIsSelected(false);
+            TargetHandler.Instance.TurnOffAllTargets();
             StartCoroutine(ReturnCard());
         }
     }

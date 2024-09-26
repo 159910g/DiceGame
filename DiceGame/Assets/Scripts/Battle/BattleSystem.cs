@@ -17,6 +17,7 @@ public class BattleSystem : MonoBehaviour
 
     public void Start()
     {
+
         if (Instance == null)
         {
             Instance = this;
@@ -56,6 +57,7 @@ public class BattleSystem : MonoBehaviour
             else 
             {
                 c.SetIsSelected(true);
+                TargetHandler.Instance.SetTargets(c.card.Targets);
             }
         }
     }
