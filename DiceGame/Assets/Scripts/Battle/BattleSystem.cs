@@ -15,6 +15,8 @@ public class BattleSystem : MonoBehaviour
     public List<DieScript> dice;
     [SerializeField] Energy energy;
 
+    public Card cardSelected;
+
     public void Start()
     {
 
@@ -45,8 +47,12 @@ public class BattleSystem : MonoBehaviour
         SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
     }
 
+    //spawnable card calls this
     public void SelectCard(SpawnableCard card)
     {
+        //go through every card in player hand and set their isSelected to false
+        //unless the card in hand is the same card that called this method in which case
+        //set it to true
         foreach (SpawnableCard c in cardsInHand)
         {
             if (c != card)
@@ -58,6 +64,7 @@ public class BattleSystem : MonoBehaviour
             {
                 c.SetIsSelected(true);
                 TargetHandler.Instance.SetTargets(c.card.Targets);
+                cardSelected = c.card;
             }
         }
     }

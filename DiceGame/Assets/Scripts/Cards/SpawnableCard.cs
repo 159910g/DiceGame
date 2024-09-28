@@ -115,6 +115,7 @@ public class SpawnableCard : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Mouse1))
         {
+            BattleSystem.Instance.cardSelected = null;
             Debug.Log("Pressed Right Click");
             SetIsSelected(false);
             TargetHandler.Instance.TurnOffAllTargets();
