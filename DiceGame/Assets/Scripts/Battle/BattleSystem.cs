@@ -40,7 +40,10 @@ public class BattleSystem : MonoBehaviour
 
         foreach(SpawnableCard c in cardsInHand)
         {
-            StartCoroutine(c.ReturnCard());
+            if(c.IsSelected)
+                StartCoroutine(c.ReturnCard());
+
+            c.isHovered = false;
         }
 
         TargetHandler.Instance.TurnOffAllTargets();
@@ -74,8 +77,11 @@ public class BattleSystem : MonoBehaviour
 
     public void Draw(int deckPos=0)
     {
-        cardsInHand.Add(Deck.Instance.Draw(deckPos));
-        SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
+        if(cardsInHand.Count < 10 && Deck.Instance.spawnedDeck.Count > 0)
+        {
+            cardsInHand.Add(Deck.Instance.Draw(deckPos));
+            SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
+        }
     }
 
     //spawnable card calls this
@@ -137,9 +143,22 @@ public class BattleSystem : MonoBehaviour
     {
         for(int i = 0; i < cardsInHand.Count; i++)
         {
+            //need this if condition to know which spawnable card to manipulate
             if(cardsInHand[i].card == cardSelected)
             {
+                if(cardSelected.Keywords.Count > 0)
+                {
+                    foreach(string k in cardSelected.Keywords)
+                    {
+                        if(!AllKeywords.Instance.KeywordAffectsTarget(k))
+                            AllKeywords.Instance.UseKeywordEffect(k, cardSelected.GetKeywordValue(k));
+                    }
+                }
+
+                //responible for determining which grid spaces are to be affected by the card (for damage/applying ailments)
                 TargetHandler.Instance.ResolveCard(cardSelected);
+
+                //removing card from hand, reorienting hand, misc
                 cardsInHand[i].gameObject.SetActive(false);
                 cardsInHand.RemoveAt(i);
                 cardSelected = null;
@@ -151,14 +170,24 @@ public class BattleSystem : MonoBehaviour
 
     public void RollDice()
     {
+        state = BattleState.Busy;
+
+        int remainingDice = dice.Count;
         foreach (DieScript die in dice)
         {
             die.RollDie((DieResult result) =>
             {
+                //Handle Effects
                 energy.ChangeEnergy(result.ATKEnergy, result.DEFEnergy, result.UTLEnergy);
-            });
 
-            //Handle Effects
+                remainingDice--;
+
+                // Once all dice have finished rolling, change state to PlayerTurn
+                if (remainingDice == 0)
+                {
+                    state = BattleState.PlayerTurn;
+                }
+            });
         }
     }
 
@@ -169,11 +198,13 @@ public class BattleSystem : MonoBehaviour
     {
         Draw();
         //player rolls dice
+        Debug.Log(state);
         RollDice();
 
         //Check for status ailment
-
-        state = BattleState.PlayerTurn;
+        //ailment checking will set state to busy
+        Debug.Log(state);
+        //state = BattleState.PlayerTurn;
 
         //player picks consumable items
 

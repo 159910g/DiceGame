@@ -7,6 +7,8 @@ public class Bleed : MonoBehaviour, KeywordInterface
     string keywordName = "Bleed";
     string keywordDescription = "Add X stacks of Bleed to Target";
 
+    bool affectsTarget = true;
+
     KeywordTier tier = KeywordTier.Tier1;
 
     public string KeywordName { get => keywordName; }
@@ -14,6 +16,8 @@ public class Bleed : MonoBehaviour, KeywordInterface
     public string KeywordDescription { get => keywordDescription; }
 
     public KeywordTier Tier { get => tier; }
+
+    public bool KeywordAffectsTarget { get => affectsTarget; }
 
     public void KeywordEffect(int potenecy)
     {

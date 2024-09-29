@@ -7,16 +7,23 @@ public class Draw : MonoBehaviour, KeywordInterface
     string keywordName = "Draw";
     string keywordDescription = "Draw X cards from your deck";
 
+    bool affectsTarget = false;
+
     KeywordTier tier = KeywordTier.Tier1;
 
     public string KeywordName { get => keywordName; }
 
     public string KeywordDescription { get => keywordDescription; }
 
+    public bool KeywordAffectsTarget { get => affectsTarget; }
+
     public KeywordTier Tier { get => tier; }
 
     public void KeywordEffect(int potenecy)
     {
-        //add stacks of "bleed" to opponent
+        for(int i = 0; i < potenecy; i++)
+        {
+            BattleSystem.Instance.Draw();
+        }
     }
 }

@@ -28,6 +28,13 @@ public class SpawnableCard : MonoBehaviour
     public Sprite redSquare;
     public Sprite blueSquare;
 
+    [SerializeField] BoxCollider2D bc;
+
+    public bool IsSelected
+    {
+        get {return isSelected;}
+    }
+
 
     void Start()
     {
@@ -54,7 +61,11 @@ public class SpawnableCard : MonoBehaviour
         {
             if(i < inputCard.Keywords.Count)
             {
-                Keywords[i].text = inputCard.Keywords[i] +" : "+ inputCard.GetKeywordValue(inputCard.Keywords[i]);
+                if(inputCard.GetKeywordValue(inputCard.Keywords[i]) > 0)
+                    Keywords[i].text = inputCard.Keywords[i] +" : "+ inputCard.GetKeywordValue(inputCard.Keywords[i]);
+                else
+                    Keywords[i].text = inputCard.Keywords[i];
+                    
                 Keywords[i].gameObject.SetActive(true);
                 Keywords[i].GetComponent<BoxCollider2D>().enabled = false;
                 Keywords[i].GetComponent<KeywordPopupController>().Init(inputCard.Keywords[i], inputCard.GetKeywordValue(inputCard.Keywords[i]));
@@ -113,6 +124,17 @@ public class SpawnableCard : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(bc.enabled)
+        {
+            if(BattleSystem.Instance.state != BattleState.PlayerTurn)   
+                bc.enabled = false;
+        }
+        if(!bc.enabled)
+        {
+            if(BattleSystem.Instance.state == BattleState.PlayerTurn)   
+                bc.enabled = true;
+        }
+
         if (Input.GetKey(KeyCode.Mouse1))
         {
             BattleSystem.Instance.ClearCardSelected();

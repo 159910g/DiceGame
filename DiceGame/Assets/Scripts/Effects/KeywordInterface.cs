@@ -10,6 +10,8 @@ public interface KeywordInterface
     string KeywordDescription { get; }  // Property for the keyword's description
 
     KeywordTier Tier { get; }
+
+    bool KeywordAffectsTarget { get; }
     
     //potenecy value = 0 when keyword does not require potency
     void KeywordEffect(int potenecy);
