@@ -32,7 +32,6 @@ public class TargetHandler : MonoBehaviour
 
     public void UpdateTargets(List<bool> targets)
     {
-        
         for(int i = 0; i < targets.Count; i++)
         {
             if(targets[i])
@@ -97,5 +96,15 @@ public class TargetHandler : MonoBehaviour
         }
 
         UpdateTargets(tempList);
+    }
+
+    public void ResolveCard(Card card)
+    {
+        for(int i = 0; i < enemyGrid.Count; i++)
+        {
+            if(enemyGrid[i].GetComponent<SpriteRenderer>().enabled)
+                enemyGrid[i].GetComponent<TargetOffset>().ResolveCard(card);
+
+        }
     }
 }

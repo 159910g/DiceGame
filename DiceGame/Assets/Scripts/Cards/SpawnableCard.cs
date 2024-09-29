@@ -115,10 +115,9 @@ public class SpawnableCard : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            BattleSystem.Instance.cardSelected = null;
+            BattleSystem.Instance.ClearCardSelected();
             Debug.Log("Pressed Right Click");
             SetIsSelected(false);
-            TargetHandler.Instance.TurnOffAllTargets();
             StartCoroutine(ReturnCard());
         }
     }
@@ -133,6 +132,7 @@ public class SpawnableCard : MonoBehaviour
 
     public IEnumerator ReturnCard()
     {
+        SetIsSelected(false);
         transform.DOMoveY(startPos.y, 0.5f);
         transform.DOMoveZ(startPos.z, 0.5f);
         transform.DOScale(startScale, 0.5f);
@@ -152,8 +152,8 @@ public class SpawnableCard : MonoBehaviour
     {
         if (isHovered && !isSelected)
         {
-            StartCoroutine(ReturnCard());
             isHovered = false;
+            StartCoroutine(ReturnCard());
         }
     }
 
