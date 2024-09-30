@@ -9,7 +9,7 @@ public class EnemyScript : BattleCharacter
     [SerializeField] SpriteRenderer nextActionIndicator;
     private EnemyAction nextAction;
 
-    void Start()
+    void Awake() //this needs to be awake to run before TargetOffset's Start function
     {
         if (characterBase == null)
         {

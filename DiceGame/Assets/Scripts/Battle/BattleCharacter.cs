@@ -15,6 +15,8 @@ public class BattleCharacter : MonoBehaviour
 
     public void SetData()
     {
+        Debug.Log(characterBase.CharacterName + " Died!");
+        Debug.Log("SET DATA");
         currentHP = characterBase.MaxHP;
         healthBar.maxValue = characterBase.MaxHP;
         healthBar.value = currentHP;
