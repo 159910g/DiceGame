@@ -37,6 +37,16 @@ public class AllKeywords : MonoBehaviour
         }
     }
 
+    public void UseKeywordEffect(string input, int potency, BattleCharacter target)
+    {
+        for(int i=0; i < keywords.Length; i++)
+        {
+            if(keywords[i].KeywordName == input)
+                keywords[i].KeywordEffect(potency, target);
+        }
+    }
+
+
     public string SearchKeywords(string input)
     {
         for(int i=0; i < keywords.Length; i++)

@@ -191,6 +191,15 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public void TriggerEnemyAilments()
+    {
+        Debug.Log("Calling TriggerEnemyAilments");
+        foreach (BattleCharacter enemy in enemies)
+        {
+            enemy.TriggerAilments();
+        }
+    }
+
     //check item for mulligan
 
     //**START OF PLAYER TURN**

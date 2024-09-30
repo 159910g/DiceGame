@@ -19,8 +19,16 @@ public class Bleed : MonoBehaviour, KeywordInterface
 
     public bool KeywordAffectsTarget { get => affectsTarget; }
 
-    public void KeywordEffect(int potenecy)
+    public void KeywordEffect(int potency, BattleCharacter target)
     {
-        //add stacks of "bleed" to opponent
+        AilmentsInterface ai = AllAilments.Instance.SearchAilments(keywordName);
+        if (target.statusAilments.ContainsKey(ai))
+        {
+            target.statusAilments[ai] += potency;
+        }
+        else
+        {
+            target.statusAilments.Add(ai, potency);
+        }
     }
 }

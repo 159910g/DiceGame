@@ -7,14 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyBase : CharacterBase
 {
-    [SerializeField] Sprite enemySprite;
     [SerializeField] List<EnemyAction> actions;
     [SerializeField] List<Sprite> actionIndicators;
-    
-    public Sprite EnemySprite
-    {
-        get { return enemySprite; }
-    }
 
     public List<EnemyAction> Actions
     {

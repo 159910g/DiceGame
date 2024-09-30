@@ -9,6 +9,7 @@ public class CharacterBase : ScriptableObject
 {
     [SerializeField] string characterName;
     [SerializeField] int maxHP;
+    [SerializeField] Sprite characterSprite;
 
     public int MaxHP
     {
@@ -18,5 +19,10 @@ public class CharacterBase : ScriptableObject
     public string CharacterName
     {
         get { return characterName; }
+    }
+
+    public Sprite CharacterSprite
+    {
+        get { return characterSprite; }
     }
 }

@@ -14,7 +14,15 @@ public interface KeywordInterface
     bool KeywordAffectsTarget { get; }
     
     //potenecy value = 0 when keyword does not require potency
-    void KeywordEffect(int potenecy);
+    virtual void KeywordEffect(int potency)
+    {
+        return;
+    }
+
+    virtual void KeywordEffect(int potency, BattleCharacter target)
+    {
+        return;
+    }
 }
 
 [System.Serializable]

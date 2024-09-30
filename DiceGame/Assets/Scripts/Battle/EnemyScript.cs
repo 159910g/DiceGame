@@ -6,25 +6,22 @@ using UnityEngine.UI;
 public class EnemyScript : BattleCharacter
 {
     private EnemyBase enemyBase;
-    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SpriteRenderer nextActionIndicator;
-    [SerializeField] Slider healthBar;
     private EnemyAction nextAction;
 
     void Start()
     {
-        //This is needed because Unity doesn't allow field type to ba altered in the child class
-        enemyBase = (EnemyBase)characterBase;
-        SetData();
-        ChooseNextAction();
-    }
+        if (characterBase == null)
+        {
+            gameObject.SetActive(false);
+        }
 
-    public void SetData()
-    {
-        base.SetData();
-        healthBar.maxValue = enemyBase.MaxHP;
-        healthBar.value = currentHP;
-        spriteRenderer.sprite = enemyBase.EnemySprite;
+        else
+        {
+            enemyBase = (EnemyBase)characterBase;
+            base.SetData();
+            ChooseNextAction();
+        }
     }
 
     public void ChooseNextAction()

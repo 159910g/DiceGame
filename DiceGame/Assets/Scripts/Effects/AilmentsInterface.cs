@@ -10,5 +10,8 @@ public interface AilmentsInterface
     string AilmentDescription { get; }  // Property for the keyword's description
     
     //potenecy value = 0 when keyword does not require potency
-    void AilmentEffect(int potenecy);
+    virtual void AilmentEffect(int potenecy, BattleCharacter target)
+    {
+        return;
+    }
 }

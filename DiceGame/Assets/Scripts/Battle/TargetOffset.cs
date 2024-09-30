@@ -8,6 +8,14 @@ public class TargetOffset : MonoBehaviour
     [SerializeField] int offsetValueY;
 
     bool isHovered = false;
+
+    public BattleCharacter character = null;
+
+    void Start()
+    {
+        GetCharacter();
+    }
+
     public void OnMouseOver()
     {
         if (!isHovered && BattleSystem.Instance.CardSelected != null)
@@ -35,10 +43,36 @@ public class TargetOffset : MonoBehaviour
                 BattleSystem.Instance.PlayCard();
             }
         }
+
+        else if (character != null)
+        {
+            character.ShowInfo();
+        }
     }
 
     public void ResolveCard(Card card)
     {
         Debug.Log(gameObject.name +" Affected by "+ card.Name);
+        if (character != null)
+        {
+            if(card.Keywords.Count > 0)
+            {
+                foreach(string k in card.Keywords)
+                {
+                    if(AllKeywords.Instance.KeywordAffectsTarget(k))
+                        AllKeywords.Instance.UseKeywordEffect(k, card.GetKeywordValue(k), character);
+                }
+            }
+
+            if(character.TakeDamage(card.ATKValue)) //dead
+            {
+                character = null;
+            }
+        }
+    }
+
+    public void GetCharacter()
+    {
+        character = GetComponentInChildren<BattleCharacter>();
     }
 }
