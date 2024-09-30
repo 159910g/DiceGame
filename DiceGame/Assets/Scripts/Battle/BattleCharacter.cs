@@ -14,4 +14,9 @@ public class BattleCharacter : MonoBehaviour
     {
         currentHP = characterBase.MaxHP;
     }
+
+    public virtual void ShowInfo()
+    {
+        return;
+    }
 }

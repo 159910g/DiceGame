@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8762774821856038560}
   - component: {fileID: 5609293957401465757}
   - component: {fileID: 3824520849038831560}
+  - component: {fileID: 8703235909968783362}
   m_Layer: 0
   m_Name: UnitBlock
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7391955052290912964}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -143,4 +144,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61823cd3aa9a2fa42a6f8bae73540041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetValue: 0
+  offsetValueX: -1
+  offsetValueY: 1
+--- !u!114 &8703235909968783362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7391955052290912964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4573cde5f2d12734180a61fda4cf5cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}

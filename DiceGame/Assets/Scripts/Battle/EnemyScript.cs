@@ -9,6 +9,7 @@ public class EnemyScript : BattleCharacter
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SpriteRenderer nextActionIndicator;
     [SerializeField] Slider healthBar;
+    private EnemyAction nextAction;
 
     void Start()
     {
@@ -28,10 +29,18 @@ public class EnemyScript : BattleCharacter
 
     public void ChooseNextAction()
     {
-        Debug.Log("Choosing Action");
         int index = Random.Range(0, enemyBase.Actions.Count);
-        EnemyAction action = enemyBase.Actions[index];
+        nextAction = enemyBase.Actions[index];
         nextActionIndicator.sprite = enemyBase.ActionIndicators[index];
-        Debug.Log("Next Action is " + action.Description);
+    }
+
+    public override void ShowInfo()
+    {
+        Debug.Log("Inside enemy showinfo()");
+        // If a card is selected, clicking on an enemy will play the card instead
+        if (BattleSystem.Instance.CardSelected == null)
+        {
+            InfoBox.Instance.SetInfo(enemyBase.CharacterName, currentHP, enemyBase.MaxHP, nextAction, statusAilments);
+        }
     }
 }

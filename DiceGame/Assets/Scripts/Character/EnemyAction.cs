@@ -7,9 +7,13 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyAction : ScriptableObject
 {
+    [SerializeField] string actionName;
     [SerializeField] string description;
-    [SerializeField] int atkValue;
-    [SerializeField] int defValue;
+    [SerializeField] int minAtkValue;
+    [SerializeField] int maxAtkValue;
+    [SerializeField] int minDefValue;
+    [SerializeField] int maxDefValue;
+
     //1 2 3
     //4 5 6
     //7 8 9
@@ -18,21 +22,37 @@ public class EnemyAction : ScriptableObject
 
     //keyword / value
     [SerializeField] List<string> keywords;
-    [SerializeField] List<int> keywordPotency;
+    [SerializeField] List<int> minKeywordPotency;
+    [SerializeField] List<int> maxKeywordPotency;
+
+    public string ActionName
+    {
+        get { return actionName; }
+    }
 
     public string Description
     {
         get { return description; }
     }   
 
-    public int ATKValue
+    public int MinATKValue
     {
-        get { return atkValue; }
+        get { return minAtkValue; }
     }
 
-    public int DEFValue
+    public int MaxATKValue
     {
-        get { return defValue; }
+        get { return maxAtkValue; }
+    }
+
+    public int MinDEFValue
+    {
+        get { return minDefValue; }
+    }
+
+    public int MaxDEFValue
+    {
+        get { return maxDefValue; }
     }
 
     public List<bool> EnemyTargets
@@ -50,14 +70,13 @@ public class EnemyAction : ScriptableObject
         get { return keywords; }
     }
 
-    public List<int> KeywordPotency
+    public List<int> MinKeywordPotency
     {
-        get { return keywordPotency; }
+        get { return minKeywordPotency; }
     }
 
-    public int GetKeywordValue(string keyword)
+    public List<int> MaxKeywordPotency
     {
-        int index = keywords.IndexOf(keyword);
-        return keywordPotency[index];
+        get { return maxKeywordPotency; }
     }
 }
