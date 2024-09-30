@@ -28,6 +28,13 @@ public class SpawnableCard : MonoBehaviour
     public Sprite redSquare;
     public Sprite blueSquare;
 
+    [SerializeField] BoxCollider2D bc;
+
+    public bool IsSelected
+    {
+        get {return isSelected;}
+    }
+
 
     void Start()
     {
@@ -54,7 +61,11 @@ public class SpawnableCard : MonoBehaviour
         {
             if(i < inputCard.Keywords.Count)
             {
-                Keywords[i].text = inputCard.Keywords[i] +" : "+ inputCard.GetKeywordValue(inputCard.Keywords[i]);
+                if(inputCard.GetKeywordValue(inputCard.Keywords[i]) > 0)
+                    Keywords[i].text = inputCard.Keywords[i] +" : "+ inputCard.GetKeywordValue(inputCard.Keywords[i]);
+                else
+                    Keywords[i].text = inputCard.Keywords[i];
+                    
                 Keywords[i].gameObject.SetActive(true);
                 Keywords[i].GetComponent<BoxCollider2D>().enabled = false;
                 Keywords[i].GetComponent<KeywordPopupController>().Init(inputCard.Keywords[i], inputCard.GetKeywordValue(inputCard.Keywords[i]));
@@ -113,12 +124,22 @@ public class SpawnableCard : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(bc.enabled)
+        {
+            if(BattleSystem.Instance.state != BattleState.PlayerTurn)   
+                bc.enabled = false;
+        }
+        if(!bc.enabled)
+        {
+            if(BattleSystem.Instance.state == BattleState.PlayerTurn)   
+                bc.enabled = true;
+        }
+
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            BattleSystem.Instance.cardSelected = null;
+            BattleSystem.Instance.ClearCardSelected();
             Debug.Log("Pressed Right Click");
             SetIsSelected(false);
-            TargetHandler.Instance.TurnOffAllTargets();
             StartCoroutine(ReturnCard());
         }
     }
@@ -133,6 +154,7 @@ public class SpawnableCard : MonoBehaviour
 
     public IEnumerator ReturnCard()
     {
+        SetIsSelected(false);
         transform.DOMoveY(startPos.y, 0.5f);
         transform.DOMoveZ(startPos.z, 0.5f);
         transform.DOScale(startScale, 0.5f);
@@ -152,8 +174,8 @@ public class SpawnableCard : MonoBehaviour
     {
         if (isHovered && !isSelected)
         {
-            StartCoroutine(ReturnCard());
             isHovered = false;
+            StartCoroutine(ReturnCard());
         }
     }
 

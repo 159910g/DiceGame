@@ -10,7 +10,7 @@ public class TargetOffset : MonoBehaviour
     bool isHovered = false;
     public void OnMouseOver()
     {
-        if (!isHovered)
+        if (!isHovered && BattleSystem.Instance.CardSelected != null)
         {
             Debug.Log(gameObject.name);
             TargetHandler.Instance.TargetOffset(offsetValueX,  offsetValueY);
@@ -24,5 +24,21 @@ public class TargetOffset : MonoBehaviour
         {
             isHovered = false;
         }
+    }
+
+    public void OnMouseDown()
+    {
+        if (BattleSystem.Instance.CardSelected != null)
+        {
+            if(BattleSystem.Instance.CheckEnergyCost())
+            {
+                BattleSystem.Instance.PlayCard();
+            }
+        }
+    }
+
+    public void ResolveCard(Card card)
+    {
+        Debug.Log(gameObject.name +" Affected by "+ card.Name);
     }
 }

@@ -9,22 +9,56 @@ public class DieScript : MonoBehaviour
     [SerializeField] TextMeshPro valueText;
     [SerializeField] SpriteRenderer bg;
 
-    public DieResult RollDie()
+    //called from battle system
+    public void RollDie(System.Action<DieResult> onComplete)
     {
         int i = Random.Range(0, faces.Length - 1);
 
-        ///Animation???///
-        valueText.text = Mathf.Max(faces[i].ATKEnergy, faces[i].DEFEnergy, faces[i].UTLEnergy).ToString();
-        bg.sprite = faces[i].DieBG;
+        // Start the coroutine and pass the callback
+        //function(parameter, () =>
+        //{
+        //  STUFF THAT HAPPENS AFTER FUNCTION IS DONE
+        //}
+        StartCoroutine(DiceAnimation(i, () => 
+        {
+            // Update valueText and bg.sprite after animation finishes
+            valueText.text = Mathf.Max(faces[i].ATKEnergy, faces[i].DEFEnergy, faces[i].UTLEnergy).ToString();
+            bg.sprite = faces[i].DieBG;
 
-        return new DieResult(
-            faces[i].ATKEnergy,
-            faces[i].DEFEnergy,
-            faces[i].UTLEnergy,
-            faces[i].Effect,
-            faces[i].EffectPotency
-        );
+            // Call the onComplete callback with the DieResult
+            DieResult result = new DieResult(
+                faces[i].ATKEnergy,
+                faces[i].DEFEnergy,
+                faces[i].UTLEnergy,
+                faces[i].Effect,
+                faces[i].EffectPotency
+            );
+
+            onComplete?.Invoke(result); // Invoke the callback with the result
+        }));
     }
+
+IEnumerator DiceAnimation(int rolledResult, System.Action onComplete)
+{
+    valueText.enabled = true;
+    bg.enabled = true;
+
+    for (int i = 0; i < (((faces.Length) * 3) + rolledResult + 1); i++)
+    {
+        int index = i % faces.Length;
+
+        valueText.text = Mathf.Max(faces[index].ATKEnergy, faces[index].DEFEnergy, faces[index].UTLEnergy).ToString();
+        bg.sprite = faces[index].DieBG;
+
+        yield return new WaitForSeconds(0.01f * (i + 1));
+    }
+
+    yield return new WaitForSeconds(1f);
+    valueText.enabled = false;
+    bg.enabled = false;
+
+    onComplete?.Invoke(); // Call the callback after the animation finishes
+}
 }
 
 public class DieResult

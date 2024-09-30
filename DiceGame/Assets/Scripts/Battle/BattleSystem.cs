@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BattleState
+{
+    PlayerTurn,
+    EnemyTurn,
+    Busy
+
+}
+
 public class BattleSystem : MonoBehaviour
 {
     public static BattleSystem Instance;
@@ -15,23 +23,49 @@ public class BattleSystem : MonoBehaviour
     public List<DieScript> dice;
     [SerializeField] Energy energy;
 
-    public Card cardSelected;
+    Card cardSelected;
+
+    public BattleState state = BattleState.Busy;
+
+    NotificationPopupController NPopup;
+
+    public Card CardSelected
+    {
+        get { return cardSelected; }
+    }
+
+    public void ClearCardSelected()
+    {
+        cardSelected = null;
+
+        foreach(SpawnableCard c in cardsInHand)
+        {
+            if(c.IsSelected)
+                StartCoroutine(c.ReturnCard());
+
+            c.isHovered = false;
+        }
+
+        TargetHandler.Instance.TurnOffAllTargets();
+    }
 
     public void Start()
     {
-
         if (Instance == null)
         {
             Instance = this;
         }
+        NPopup = GetComponent<NotificationPopupController>();
         cardsInHand = new List<SpawnableCard>();
         SetupBattle();
     }
 
     public void SetupBattle()
     {
+        //spawn in all cards in deck
         Deck.Instance.StartBattle();
         DrawOpeningHand();
+        PlayerTurn();
     }
 
     //draw opening hand (3)
@@ -43,59 +77,145 @@ public class BattleSystem : MonoBehaviour
 
     public void Draw(int deckPos=0)
     {
-        cardsInHand.Add(Deck.Instance.Draw(deckPos));
-        SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
+        if(cardsInHand.Count < 10 && Deck.Instance.spawnedDeck.Count > 0)
+        {
+            cardsInHand.Add(Deck.Instance.Draw(deckPos));
+            SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
+        }
     }
 
     //spawnable card calls this
+    //player picks card
     public void SelectCard(SpawnableCard card)
     {
-        //go through every card in player hand and set their isSelected to false
-        //unless the card in hand is the same card that called this method in which case
-        //set it to true
-        foreach (SpawnableCard c in cardsInHand)
+        if(state == BattleState.PlayerTurn)
         {
-            if (c != card)
+            //go through every card in player hand and set their isSelected to false
+            //unless the card in hand is the same card that called this method in which case
+            //set it to true
+            foreach (SpawnableCard c in cardsInHand)
             {
-                c.SetIsSelected(false);
-                c.OnMouseExit();
+                if (c != card)
+                {
+                    c.SetIsSelected(false);
+                    c.OnMouseExit();
+                }
+                else 
+                {
+                    c.SetIsSelected(true);
+                    TargetHandler.Instance.SetTargets(c.card.Targets);
+                    cardSelected = c.card;
+                }
             }
-            else 
+        }
+    }
+
+    public bool CheckEnergyCost()
+    {
+        bool atk = false;
+        bool def = false;
+        bool util = false;
+
+        if(energy.atkEnergy >= cardSelected.ATKEnergyCost)
+            atk = true;
+        
+        if(energy.defEnergy >= cardSelected.DEFEnergyCost)
+            def = true;
+
+        if(energy.utlEnergy >= cardSelected.UTLEnergyCost)
+            util = true;
+
+        if(atk && def && util)
+        {   
+            energy.ChangeEnergy(cardSelected.ATKEnergyCost*-1, cardSelected.DEFEnergyCost*-1, cardSelected.UTLEnergyCost*-1);
+            return true;
+        }
+
+        else  
+        {
+            NPopup.NotEnoughMana();
+            ClearCardSelected();
+            return false;
+        }
+    }
+
+    public void PlayCard()
+    {
+        for(int i = 0; i < cardsInHand.Count; i++)
+        {
+            //need this if condition to know which spawnable card to manipulate
+            if(cardsInHand[i].card == cardSelected)
             {
-                c.SetIsSelected(true);
-                TargetHandler.Instance.SetTargets(c.card.Targets);
-                cardSelected = c.card;
+                if(cardSelected.Keywords.Count > 0)
+                {
+                    foreach(string k in cardSelected.Keywords)
+                    {
+                        if(!AllKeywords.Instance.KeywordAffectsTarget(k))
+                            AllKeywords.Instance.UseKeywordEffect(k, cardSelected.GetKeywordValue(k));
+                    }
+                }
+
+                //responible for determining which grid spaces are to be affected by the card (for damage/applying ailments)
+                TargetHandler.Instance.ResolveCard(cardSelected);
+
+                //removing card from hand, reorienting hand, misc
+                cardsInHand[i].gameObject.SetActive(false);
+                cardsInHand.RemoveAt(i);
+                cardSelected = null;
+                TargetHandler.Instance.TurnOffAllTargets();
+                SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
             }
         }
     }
 
     public void RollDice()
     {
+        state = BattleState.Busy;
+
+        int remainingDice = dice.Count;
         foreach (DieScript die in dice)
         {
-            DieResult result = die.RollDie();
-            energy.ChangeEnergy(result.ATKEnergy, result.DEFEnergy, result.UTLEnergy);
+            die.RollDie((DieResult result) =>
+            {
+                //Handle Effects
+                energy.ChangeEnergy(result.ATKEnergy, result.DEFEnergy, result.UTLEnergy);
 
-            //Handle Effects
+                remainingDice--;
+
+                // Once all dice have finished rolling, change state to PlayerTurn
+                if (remainingDice == 0)
+                {
+                    state = BattleState.PlayerTurn;
+                }
+            });
         }
     }
 
     //check item for mulligan
 
     //**START OF PLAYER TURN**
+    public void PlayerTurn()
+    {
+        Draw();
+        //player rolls dice
+        Debug.Log(state);
+        RollDice();
 
-    //player rolls dice
-    //Check for status ailment
+        //Check for status ailment
+        //ailment checking will set state to busy
+        Debug.Log(state);
+        //state = BattleState.PlayerTurn;
 
-    //player picks card and/or target plays card
-    //player picks consumable items
+        //player picks consumable items
 
-    //handle card keywords before damage
+        //handle card keywords before damage
 
-    //call dmg calc
+        //call dmg calc
 
-    //Check for status ailment
-    //**END TURN OF PLAYER TURN**
+        //Check for status ailment
+        //**END TURN OF PLAYER TURN**
+    }
+
 
 
 
