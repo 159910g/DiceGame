@@ -22,6 +22,13 @@ public class InfoBox : MonoBehaviour
         }
     }
 
+    private void FixedUpdate() {
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            HideInfo();
+        }
+    }
+
     public void SetInfo(string charName, int currHealth, int maxHealth, EnemyAction action=null, Dictionary<AilmentsInterface, int> ailments=null)
     {
         container.SetActive(true);

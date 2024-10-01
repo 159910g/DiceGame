@@ -20,6 +20,6 @@ MonoBehaviour:
   defValue: 5
   keywords: []
   keywordPotency: 
-  targets: 000000000100000000
+  targets: 00000000000000000001
   frame: {fileID: 21300000, guid: 0efed38ed34c78e41bd3aab77851ea1e, type: 3}
   gridImage: {fileID: 0}

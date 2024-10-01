@@ -62,7 +62,7 @@ public class Deck : MonoBehaviour
 
             spawnedDeck.Add(card);
 
-            Debug.Log(c.Name);
+            //Debug.Log(c.Name);
         }
     }
 

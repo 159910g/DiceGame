@@ -16,12 +16,17 @@ public class TargetHandler : MonoBehaviour
             Instance = this;
         }
 
-        player.SetActive(false);
+        player.GetComponent<SpriteRenderer>().enabled = false;
 
         foreach(GameObject g in enemyGrid)
         {
             g.GetComponent<SpriteRenderer>().enabled = false;
         }
+    }
+
+    public void TargetPlayer()
+    {
+        player.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void SetTargets(List<bool> targets)
@@ -32,14 +37,19 @@ public class TargetHandler : MonoBehaviour
 
     public void UpdateTargets(List<bool> targets)
     {
-        for(int i = 0; i < targets.Count; i++)
+        if(targets.Count < 10)
         {
-            if(targets[i])
-                enemyGrid[i].GetComponent<SpriteRenderer>().enabled = true;
+            for(int i = 0; i < 9; i++)
+            {
+                if(targets[i])
+                    enemyGrid[i].GetComponent<SpriteRenderer>().enabled = true;
 
-            else
-                enemyGrid[i].GetComponent<SpriteRenderer>().enabled = false;
+                else
+                    enemyGrid[i].GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
+        else
+            player.GetComponent<SpriteRenderer>().enabled = targets[9];
     }
 
     public void TurnOffAllTargets()
@@ -49,7 +59,7 @@ public class TargetHandler : MonoBehaviour
         {
             tempList.Add(false);
         }
-
+        player.GetComponent<SpriteRenderer>().enabled = false;
         UpdateTargets(tempList);
     }
 
@@ -100,6 +110,11 @@ public class TargetHandler : MonoBehaviour
 
     public void ResolveCard(Card card)
     {
+        if(card.DEFValue > 0)
+        {
+            player.GetComponentsInChildren<BattleCharacter>()[0].ChangeCurrentArmour(card.DEFValue);
+        }
+
         for(int i = 0; i < enemyGrid.Count; i++)
         {
             if(enemyGrid[i].GetComponent<SpriteRenderer>().enabled)

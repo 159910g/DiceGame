@@ -30,5 +30,7 @@ public class Bleed : MonoBehaviour, KeywordInterface
         {
             target.statusAilments.Add(ai, potency);
         }
+
+        ai.AilmentEffect( target.statusAilments[ai], target);
     }
 }

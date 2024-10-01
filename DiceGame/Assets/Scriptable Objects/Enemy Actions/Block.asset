@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aed4e5de03902b4ca59292722090237, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
+  actionName: Block
   description: A basic block
-  atkValue: 0
-  defValue: 1
+  minAtkValue: 0
+  maxAtkValue: 0
+  minDefValue: 1
+  maxDefValue: 5
   enemyTargets: 
   targetsPlayer: 0
   keywords: []
-  keywordPotency: 
+  minKeywordPotency: 
+  maxKeywordPotency: 

@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aed4e5de03902b4ca59292722090237, type: 3}
   m_Name: Heal
   m_EditorClassIdentifier: 
-  atkValue: 0
-  defValue: 0
+  actionName: Heal
+  description: 
+  minAtkValue: 0
+  maxAtkValue: 0
+  minDefValue: 0
+  maxDefValue: 0
   enemyTargets: 
   targetsPlayer: 0
   keywords: []
-  keywordPotency: 
+  minKeywordPotency: 
+  maxKeywordPotency: 

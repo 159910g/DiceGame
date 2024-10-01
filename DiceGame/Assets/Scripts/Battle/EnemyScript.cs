@@ -9,6 +9,11 @@ public class EnemyScript : BattleCharacter
     [SerializeField] SpriteRenderer nextActionIndicator;
     private EnemyAction nextAction;
 
+    public EnemyAction NextAction 
+    {
+        get {return nextAction;} 
+    }
+
     void Awake() //this needs to be awake to run before TargetOffset's Start function
     {
         if (characterBase == null)
@@ -37,7 +42,7 @@ public class EnemyScript : BattleCharacter
         // If a card is selected, clicking on an enemy will play the card instead
         if (BattleSystem.Instance.CardSelected == null)
         {
-            InfoBox.Instance.SetInfo(enemyBase.CharacterName, currentHP, enemyBase.MaxHP, nextAction, statusAilments);
+            InfoBox.Instance.SetInfo(enemyBase.CharacterName, currentHP, enemyBase.MaxHP, nextAction, base.statusAilments);
         }
     }
 }

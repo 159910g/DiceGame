@@ -22,12 +22,19 @@ public class BattleSystem : MonoBehaviour
 
     public List<DieScript> dice;
     [SerializeField] Energy energy;
+    [SerializeField] DMGAnimator dmgA;
 
     Card cardSelected;
 
     public BattleState state = BattleState.Busy;
 
     NotificationPopupController NPopup;
+
+    public void PlayDMGTextAnimation(Vector3 pos, int dmg)
+    {
+        DMGAnimator a = Instantiate(dmgA, pos, Quaternion.identity);
+        a.SetData(dmg);
+    }
 
     public Card CardSelected
     {
@@ -155,6 +162,8 @@ public class BattleSystem : MonoBehaviour
                     }
                 }
 
+                player.GetComponent<Animations>().PlayAttackAnimation();
+
                 //responible for determining which grid spaces are to be affected by the card (for damage/applying ailments)
                 TargetHandler.Instance.ResolveCard(cardSelected);
 
@@ -200,6 +209,42 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    public void StartEnemyTurn()
+    {
+        StartCoroutine(EnemyTurn());
+    }
+
+    public IEnumerator EnemyTurn()
+    {
+        EnemyAction action = new EnemyAction();
+        foreach (EnemyScript enemy in enemies)
+        {
+            if(enemy.characterBase != null)
+            {
+                action = enemy.NextAction;
+
+                int dmg = Random.Range(action.MinATKValue, action.MaxATKValue);
+                if(dmg > 0)
+                {
+                    enemy.GetComponent<Animations>().PlayAttackAnimation();
+                    yield return new WaitForSeconds(0.2f);
+                    player.TakeDamage(dmg);
+                    Debug.Log(enemy.characterBase.CharacterName +" did "+ dmg);
+                }
+
+                int armour = Random.Range(action.MinDEFValue, action.MaxDEFValue);
+                if(armour > 0)
+                {
+                    enemy.ChangeCurrentArmour(armour);
+                }
+
+                enemy.ChooseNextAction();   
+
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+        PlayerTurn();
+    }
     //check item for mulligan
 
     //**START OF PLAYER TURN**

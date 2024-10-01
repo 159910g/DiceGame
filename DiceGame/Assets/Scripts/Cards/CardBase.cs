@@ -25,6 +25,7 @@ public class CardBase : ScriptableObject
     //1 2 3
     //4 5 6
     //7 8 9
+    // 10 = player
     [SerializeField] List<bool> targets;
 
     [SerializeField] Sprite frame;

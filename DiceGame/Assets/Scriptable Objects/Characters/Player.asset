@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Player
   maxHP: 10
+  characterSprite: {fileID: 21300000, guid: d5919294a1ba78f48b626ee46d45e985, type: 3}

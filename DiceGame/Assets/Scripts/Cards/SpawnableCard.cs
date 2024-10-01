@@ -88,6 +88,12 @@ public class SpawnableCard : MonoBehaviour
                 GridImage[i].sprite = whiteSquare;
             }
         }
+
+        if(inputCard.Targets[9] == true)
+            {
+                GridImage[4].sprite = blueSquare;
+            }
+
     }
 
     //function needs to check if card is selected
