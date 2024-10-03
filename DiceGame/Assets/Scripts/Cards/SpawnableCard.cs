@@ -89,10 +89,13 @@ public class SpawnableCard : MonoBehaviour
             }
         }
 
-        if(inputCard.Targets[9] == true)
-            {
-                GridImage[4].sprite = blueSquare;
-            }
+        if(inputCard.Targets.Count == 10)
+        {
+            if(inputCard.Targets[9] == true)
+                {
+                    GridImage[4].sprite = blueSquare;
+                }
+        }
 
     }
 
@@ -143,11 +146,16 @@ public class SpawnableCard : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            BattleSystem.Instance.ClearCardSelected();
-            Debug.Log("Pressed Right Click");
-            SetIsSelected(false);
-            StartCoroutine(ReturnCard());
+            DeselectCard();
         }
+    }
+
+    public void DeselectCard()
+    {
+        BattleSystem.Instance.ClearCardSelected();
+        Debug.Log("Pressed Right Click");
+        SetIsSelected(false);
+        StartCoroutine(ReturnCard());
     }
 
     public IEnumerator LookAtCard()

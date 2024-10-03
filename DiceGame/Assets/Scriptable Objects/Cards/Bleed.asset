@@ -21,6 +21,6 @@ MonoBehaviour:
   keywords:
   - Bleed
   keywordPotency: 01000000
-  targets: 01010101010101010100
+  targets: 010101010101010101
   frame: {fileID: 21300000, guid: 6728fc1a531712249a480e0e24a3224a, type: 3}
   gridImage: {fileID: 0}

@@ -1190,11 +1190,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3824520849038831560, guid: ffc267e773092f649ab76cb34f20e434, type: 3}
       propertyPath: offsetValueX
-      value: -2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 3824520849038831560, guid: ffc267e773092f649ab76cb34f20e434, type: 3}
       propertyPath: offsetValueY
-      value: -2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 5898551936963330096, guid: ffc267e773092f649ab76cb34f20e434, type: 3}
       propertyPath: m_Name
@@ -1250,7 +1250,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9043930504764021515, guid: ffc267e773092f649ab76cb34f20e434, type: 3}
-    - {fileID: 3824520849038831560, guid: ffc267e773092f649ab76cb34f20e434, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8405342789751084295, guid: ffc267e773092f649ab76cb34f20e434, type: 3}
     m_AddedGameObjects: []

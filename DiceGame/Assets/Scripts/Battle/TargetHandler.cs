@@ -29,18 +29,29 @@ public class TargetHandler : MonoBehaviour
         player.GetComponent<SpriteRenderer>().enabled = true;
     }
 
+    //functions gets called when a card is selected
+    //turn off current targets
+    //show new targets with an offset of 0,0 (meaning the grid will light up to match the card's image)
     public void SetTargets(List<bool> targets)
     {
         storedTargets = targets;
-        UpdateTargets(storedTargets);
+        TurnOffAllTargets();
+        TargetOffset(0,0);
     }
 
     public void UpdateTargets(List<bool> targets)
     {
-        if(targets.Count < 10)
+        Debug.Log(targets.Count);
+        if(targets.Count < 10) //card targets enemies
         {
+            //turn off player "hitbox"
+            player.GetComponent<TargetOffset>().enabled = false;
+
+            //turn on every enemies's "hitbox"
             for(int i = 0; i < 9; i++)
             {
+                enemyGrid[i].GetComponent<TargetOffset>().enabled = true;
+
                 if(targets[i])
                     enemyGrid[i].GetComponent<SpriteRenderer>().enabled = true;
 
@@ -48,8 +59,20 @@ public class TargetHandler : MonoBehaviour
                     enemyGrid[i].GetComponent<SpriteRenderer>().enabled = false;
             }
         }
-        else
-            player.GetComponent<SpriteRenderer>().enabled = targets[9];
+        else //card targets player
+        {   
+            //turn on player "hitbox"
+            player.GetComponent<TargetOffset>().enabled = true;
+
+            //turn off enemy "hitboxes"
+            for(int i = 0; i < 9; i++)
+            {
+                enemyGrid[i].GetComponent<TargetOffset>().enabled = false;
+            }
+
+            //turn on player targetting grid
+            player.GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
     public void TurnOffAllTargets()
@@ -105,6 +128,12 @@ public class TargetHandler : MonoBehaviour
             }
         }
 
+        //only cards that target the player have a count of 10
+        if(storedTargets.Count == 10)
+        {
+            tempList.Add(storedTargets[9]);
+        }
+
         UpdateTargets(tempList);
     }
 
@@ -121,5 +150,8 @@ public class TargetHandler : MonoBehaviour
                 enemyGrid[i].GetComponent<TargetOffset>().ResolveCard(card);
 
         }
+
+        if(player.GetComponent<TargetOffset>().enabled)
+            player.GetComponent<TargetOffset>().ResolveCard(card);
     }
 }

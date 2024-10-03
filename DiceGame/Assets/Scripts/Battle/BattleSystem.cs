@@ -211,6 +211,10 @@ public class BattleSystem : MonoBehaviour
 
     public void StartEnemyTurn()
     {
+        foreach(SpawnableCard c in cardsInHand)
+        {
+            c.DeselectCard();
+        }
         StartCoroutine(EnemyTurn());
     }
 

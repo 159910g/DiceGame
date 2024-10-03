@@ -21,6 +21,6 @@ MonoBehaviour:
   keywords:
   - Draw
   keywordPotency: 01000000
-  targets: 00000100010001000000
+  targets: 000001000100010000
   frame: {fileID: 21300000, guid: 6728fc1a531712249a480e0e24a3224a, type: 3}
   gridImage: {fileID: 0}

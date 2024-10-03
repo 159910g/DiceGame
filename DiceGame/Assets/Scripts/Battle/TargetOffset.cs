@@ -36,17 +36,20 @@ public class TargetOffset : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (BattleSystem.Instance.CardSelected != null)
+        if(this.enabled)
         {
-            if(BattleSystem.Instance.CheckEnergyCost())
+            if (BattleSystem.Instance.CardSelected != null)
             {
-                BattleSystem.Instance.PlayCard();
+                if(BattleSystem.Instance.CheckEnergyCost())
+                {
+                    BattleSystem.Instance.PlayCard();
+                }
             }
-        }
 
-        else if (character != null)
-        {
-            character.ShowInfo();
+            else if (character != null)
+            {
+                character.ShowInfo();
+            }
         }
     }
 
