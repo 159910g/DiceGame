@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum BattleState
 {
@@ -30,6 +31,9 @@ public class BattleSystem : MonoBehaviour
 
     NotificationPopupController NPopup;
 
+    public UnityEvent cardSelectEvent;
+    public UnityEvent cardDeselectEvent;
+
     public void PlayDMGTextAnimation(Vector3 pos, int dmg)
     {
         DMGAnimator a = Instantiate(dmgA, pos, Quaternion.identity);
@@ -43,6 +47,7 @@ public class BattleSystem : MonoBehaviour
 
     public void ClearCardSelected()
     {
+        cardDeselectEvent.Invoke();
         cardSelected = null;
 
         foreach(SpawnableCard c in cardsInHand)
@@ -56,14 +61,17 @@ public class BattleSystem : MonoBehaviour
         TargetHandler.Instance.TurnOffAllTargets();
     }
 
-    public void Start()
+    public void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+        if (Instance == null) Instance = this;
+        if (cardSelectEvent == null) cardSelectEvent = new UnityEvent();
+        if (cardDeselectEvent == null) cardDeselectEvent = new UnityEvent();
         NPopup = GetComponent<NotificationPopupController>();
         cardsInHand = new List<SpawnableCard>();
+    }
+
+    public void Start()
+    {
         SetupBattle();
     }
 
@@ -97,6 +105,7 @@ public class BattleSystem : MonoBehaviour
     {
         if(state == BattleState.PlayerTurn)
         {
+            cardSelectEvent.Invoke();
             //go through every card in player hand and set their isSelected to false
             //unless the card in hand is the same card that called this method in which case
             //set it to true

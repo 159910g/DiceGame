@@ -10,10 +10,27 @@ public class TargetOffset : MonoBehaviour
     bool isHovered = false;
 
     public BattleCharacter character = null;
+    [SerializeField] BoxCollider2D collider2D;
 
     void Start()
     {
-        GetCharacter();
+        character = GetCharacter();
+        if (collider2D == null) collider2D = GetComponent<BoxCollider2D>();
+        BattleSystem.Instance.cardSelectEvent.AddListener(EnablePlay);
+        BattleSystem.Instance.cardDeselectEvent.AddListener(DisablePlay);
+    }
+
+    public void EnablePlay() //All squares can be targets for cards
+    {
+        collider2D.enabled = true;
+    }
+
+    public void DisablePlay() //Only squares with characters can be targeted for info
+    {
+        if (character == null)
+        {
+            collider2D.enabled = false;
+        }
     }
 
     public void OnMouseOver()
@@ -74,8 +91,8 @@ public class TargetOffset : MonoBehaviour
         }
     }
 
-    public void GetCharacter()
+    public BattleCharacter GetCharacter()
     {
-        character = GetComponentInChildren<BattleCharacter>();
+        return GetComponentInChildren<BattleCharacter>();
     }
 }
