@@ -72,6 +72,7 @@ public class BattleSystem : MonoBehaviour
 
     public void Start()
     {
+        cardDeselectEvent.Invoke();
         SetupBattle();
     }
 
