@@ -185,6 +185,7 @@ public class BattleSystem : MonoBehaviour
                 cardSelected = null;
                 TargetHandler.Instance.TurnOffAllTargets();
                 SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
+                cardDeselectEvent.Invoke();
             }
         }
     }
