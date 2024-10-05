@@ -41,8 +41,10 @@ public class EnemyScript : BattleCharacter
         Debug.Log("Inside enemy showinfo()");
         // If a card is selected, clicking on an enemy will play the card instead
         if (BattleSystem.Instance.CardSelected == null)
-        {
+        {            
             InfoBox.Instance.SetInfo(enemyBase.CharacterName, currentHP, enemyBase.MaxHP, nextAction, base.statusAilments);
+        
+            base.ShowHPDetails();
         }
     }
 }

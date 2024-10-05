@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Punch
   m_EditorClassIdentifier: 
   Name: Punch
-  atkEnergyCost: 1
+  atkEnergyCost: 0
   defEnergyCost: 0
   utlEnergyCost: 0
   atkValue: 2

@@ -107,6 +107,8 @@ public class BattleSystem : MonoBehaviour
         if(state == BattleState.PlayerTurn)
         {
             cardSelectEvent.Invoke();
+
+            InfoBox.Instance.HideInfo();
             //go through every card in player hand and set their isSelected to false
             //unless the card in hand is the same card that called this method in which case
             //set it to true

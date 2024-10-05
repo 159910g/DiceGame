@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class BattleCharacter : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BattleCharacter : MonoBehaviour
     public Dictionary<AilmentsInterface, int> statusAilments = new Dictionary<AilmentsInterface, int>(); 
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] protected Slider healthBar;
+    [SerializeField] protected Slider damageBar;
     public List<AilmentsInterface> ailmentsToCure = new List<AilmentsInterface>();
 
     [SerializeField] TextMeshPro armourText;
@@ -50,9 +52,12 @@ public class BattleCharacter : MonoBehaviour
         currentHP = characterBase.MaxHP;
         healthBar.maxValue = characterBase.MaxHP;
         healthBar.value = currentHP;
+        damageBar.maxValue = characterBase.MaxHP;
+        damageBar.value = 0;
         spriteRenderer.sprite = characterBase.CharacterSprite;
         currentArmour = 0;
         ChangeCurrentArmour(0);
+        healthBar.GetComponentInChildren<TextMeshPro>().enabled = false;
     }
 
     public virtual void ShowInfo()
@@ -62,31 +67,35 @@ public class BattleCharacter : MonoBehaviour
 
     public bool TakeDamage(int damage)
     {
-        if(currentArmour - damage >= 0)
+        if(characterBase != null)
         {
-            ChangeCurrentArmour(-damage);
-        }
-        else
-        {
-            currentHP += (currentArmour - damage); //currentArmour - damage is a negative number;
-            ChangeCurrentArmour(-damage);
-        }
+            if(currentArmour - damage >= 0)
+            {
+                ChangeCurrentArmour(-damage);
+            }
+            else
+            {
+                currentHP += (currentArmour - damage); //currentArmour - damage is a negative number;
+                ChangeCurrentArmour(-damage);
+            }
 
-        if(damage > 0)
-        {
-            BattleSystem.Instance.PlayDMGTextAnimation(transform.position, damage);
-            GetComponent<Animations>().PlayHitAnimation();
-        }
+            if(damage > 0)
+            {
+                BattleSystem.Instance.PlayDMGTextAnimation(transform.position, damage);
+                GetComponent<Animations>().PlayHitAnimation();
+            }
 
-        if (currentHP <= 0)
-        {
-            Debug.Log(characterBase.CharacterName + " Died!");
-            GetComponent<Animations>().PlayFaintAnimation();
-            gameObject.SetActive(false);
-            return true;
-        }
+            if (currentHP <= 0)
+            {
+                Debug.Log(characterBase.CharacterName + " Died!");
+                GetComponent<Animations>().PlayFaintAnimation();
+                gameObject.SetActive(false);
+                characterBase = null;
+                return true;
+            }
 
-        healthBar.value = currentHP;
+            healthBar.value = currentHP;
+        }
         return false;
     }
 
@@ -104,5 +113,52 @@ public class BattleCharacter : MonoBehaviour
         }
 
         ailmentsToCure.Clear();
+    }
+
+    public void ShowHPDetails()
+    {
+        InfoBox.Instance.OnHideInfo += HideInfo;
+
+        if(BattleSystem.Instance.CardSelected != null)
+        {
+            int damage = BattleSystem.Instance.CardSelected.ATKValue;
+
+            if(currentArmour - damage >= 0)
+            {
+                armourText.text = (currentArmour - damage).ToString();
+            }
+            else
+            {
+                int HPafterATK = currentHP + (currentArmour - damage); //currentArmour - damage is a negative number;
+                
+                if(HPafterATK < 0)
+                    HPafterATK = 0;
+
+                healthBar.GetComponentInChildren<TextMeshPro>().text = HPafterATK +"/"+ characterBase.MaxHP;
+                GetComponent<HPAnimation>().FadeHP(HPafterATK);
+            }
+        }
+
+        else
+            healthBar.GetComponentInChildren<TextMeshPro>().text = currentHP +"/"+ characterBase.MaxHP;
+        
+        healthBar.GetComponentInChildren<TextMeshPro>().enabled = true;
+        healthBar.transform.DOScaleY(2, 0.25f);
+    }
+
+    public void HideInfo()
+    {
+        //stop coroutine
+        GetComponent<HPAnimation>().StopDmgFade();
+        //set damagebar to 0 (empty)
+        damageBar.value = 0;
+        //set armour back to normal
+        armourText.text = currentArmour.ToString();
+        //set hp back to normal
+        healthBar.value = currentHP;
+        //turn off text
+        healthBar.GetComponentInChildren<TextMeshPro>().enabled = false;
+        //back to normal
+        healthBar.transform.DOScaleY(1, 0.25f);
     }
 }

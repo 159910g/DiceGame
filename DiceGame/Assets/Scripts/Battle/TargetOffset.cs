@@ -70,6 +70,18 @@ public class TargetOffset : MonoBehaviour
         }
     }
 
+    public void CurrentlyTargetted(bool value)
+    {
+        if (character != null)
+        {
+            if(value)   
+                character.ShowHPDetails();
+
+            else
+                character.HideInfo();   
+        }     
+    } 
+
     public void ResolveCard(Card card)
     {
         Debug.Log(gameObject.name +" Affected by "+ card.Name);

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Bleed
   m_EditorClassIdentifier: 
   Name: Bleed
-  atkEnergyCost: 1
+  atkEnergyCost: 0
   defEnergyCost: 0
   utlEnergyCost: 0
-  atkValue: 0
+  atkValue: 2
   defValue: 0
   keywords:
   - Bleed

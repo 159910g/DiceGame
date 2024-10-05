@@ -41,7 +41,7 @@ public class TargetHandler : MonoBehaviour
 
     public void UpdateTargets(List<bool> targets)
     {
-        Debug.Log(targets.Count);
+        //Debug.Log(targets.Count);
         if(targets.Count < 10) //card targets enemies
         {
             //turn off player "hitbox"
@@ -57,6 +57,9 @@ public class TargetHandler : MonoBehaviour
 
                 else
                     enemyGrid[i].GetComponent<SpriteRenderer>().enabled = false;
+
+                //tell the target offset if it is targtted by giving it the sprite renderer
+                enemyGrid[i].GetComponent<TargetOffset>().CurrentlyTargetted(enemyGrid[i].GetComponent<SpriteRenderer>().enabled);
             }
         }
         else //card targets player

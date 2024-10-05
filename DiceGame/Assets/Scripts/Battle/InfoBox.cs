@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class InfoBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI characterAilments;
     [SerializeField] GameObject hoverableAilmentPrefab;
     [SerializeField] Vector3 topOfAilmentSection = new Vector3(0,0,0);
+
+    public event Action OnHideInfo;
 
     void Awake()
     {
@@ -31,6 +34,7 @@ public class InfoBox : MonoBehaviour
 
     public void SetInfo(string charName, int currHealth, int maxHealth, EnemyAction action=null, Dictionary<AilmentsInterface, int> ailments=null)
     {
+        HideInfo();
         container.SetActive(true);
         characterName.text = charName;
         characterHealth.text = "HP: " + currHealth + " / " + maxHealth;
@@ -45,5 +49,6 @@ public class InfoBox : MonoBehaviour
     public void HideInfo()
     {
         container.SetActive(false);
+        OnHideInfo?.Invoke();
     }
 }
