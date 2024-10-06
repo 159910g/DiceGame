@@ -5,9 +5,20 @@ using UnityEngine;
 public class AilmentHover : MonoBehaviour
 {
     public AilmentsInterface ailment;
+    bool isHovered = false;
 
     void OnMouseOver()
     {
-        InfoBox.Instance.ShowAilmentDetails(ailment);
+        if (!isHovered)
+        {
+            InfoBox.Instance.ShowAilmentDetails(ailment);
+            isHovered = true;
+        }
+    }
+
+    void OnMouseExit()
+    {
+        InfoBox.Instance.HideAilmentDetails();
+        isHovered = false;
     }
 }

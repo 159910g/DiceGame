@@ -12,8 +12,9 @@ public class InfoBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI characterHealth;
     [SerializeField] TextMeshProUGUI nextAction;
     [SerializeField] GameObject hoverableAilmentPrefab;
-    [SerializeField] Vector3 topOfAilmentSection = new Vector3(0,0,0);
+    [SerializeField] Vector3 startOfAilmentSection = new Vector3(0,0,0);
     [SerializeField] TextMeshProUGUI ailmentDetails;
+    List<GameObject> currentHoverableAilments = new List<GameObject>();
 
     public event Action OnHideInfo;
 
@@ -32,7 +33,7 @@ public class InfoBox : MonoBehaviour
         }
     }
 
-    public void SetInfo(string charName, int currHealth, int maxHealth, EnemyAction action, Dictionary<AilmentsInterface, int> ailments)
+    public void SetInfo(string charName, int currHealth, int maxHealth, EnemyAction action, Dictionary<AilmentsInterface, int> ailmentsPotency)
     {
         HideInfo();
         container.SetActive(true);
@@ -51,18 +52,37 @@ public class InfoBox : MonoBehaviour
         {
             nextAction.text += action.Keywords[i] + " " + action.MinKeywordPotency[i] + "-" + action.MaxKeywordPotency[i];
         }
-        foreach (AilmentsInterface ailment in ailments.Keys)
+        float offsetX = 0f; //Track where next word should start
+        float offsetY = 0f;
+        foreach (AilmentsInterface ailment in ailmentsPotency.Keys)
         {
             Debug.Log(ailment);
-            GameObject a = Instantiate(hoverableAilmentPrefab, topOfAilmentSection, Quaternion.identity);
+            GameObject a = Instantiate(hoverableAilmentPrefab, startOfAilmentSection, Quaternion.identity);
             a.transform.parent = gameObject.transform;
+            a.transform.localPosition = new Vector3(
+                startOfAilmentSection.x + startOfAilmentSection.x + offsetX, 
+                startOfAilmentSection.y + startOfAilmentSection.y + offsetY,
+                startOfAilmentSection.z
+            );
+            TextMeshProUGUI ailmentText = a.GetComponent<TextMeshProUGUI>();
+            ailmentText.text = ailment.AilmentName + ailmentsPotency[ailment];
+            offsetX += ailmentText.GetRenderedValues(true).x;
+            if (offsetX >= 292)
+            {
+                offsetX = -60; //Second and subsequent rows are more to the left due to the space from the title
+                offsetY -= 30;
+            }
             a.GetComponent<AilmentHover>().ailment = ailment;
-            topOfAilmentSection = new Vector3(topOfAilmentSection.x, topOfAilmentSection.y - 50.0f, topOfAilmentSection.z);
+            currentHoverableAilments.Add(a);
         }
     }
 
     public void HideInfo()
     {
+        foreach (GameObject ailment in currentHoverableAilments)
+        {
+            Destroy(ailment);
+        }
         ailmentDetails.text = "";
         container.SetActive(false);
         OnHideInfo?.Invoke();
@@ -70,6 +90,11 @@ public class InfoBox : MonoBehaviour
 
     public void ShowAilmentDetails(AilmentsInterface ailment)
     {
-        ailmentDetails.text = ailment.AilmentIcon + " " + ailment.AilmentName + "\n\n" + ailment.AilmentDescription;
+        ailmentDetails.text = ailment.AilmentName + "\n\n" + ailment.AilmentDescription;
+    }
+
+    public void HideAilmentDetails()
+    {
+        ailmentDetails.text = "";
     }
 }
