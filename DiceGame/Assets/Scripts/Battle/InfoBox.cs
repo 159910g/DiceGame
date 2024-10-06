@@ -90,7 +90,7 @@ public class InfoBox : MonoBehaviour
 
     public void ShowAilmentDetails(AilmentsInterface ailment)
     {
-        ailmentDetails.text = ailment.AilmentIcon + " " + ailment.AilmentName + "\n\n" + ailment.AilmentDescription;
+        ailmentDetails.text = ailment.AilmentName + "\n\n" + ailment.AilmentDescription;
     }
 
     public void HideAilmentDetails()
