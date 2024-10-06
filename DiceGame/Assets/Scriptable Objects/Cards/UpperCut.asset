@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca4ee31683f9e8409cff26852cca4ff, type: 3}
-  m_Name: Tackle
+  m_Name: UpperCut
   m_EditorClassIdentifier: 
-  Name: Tackle
-  atkEnergyCost: 0
+  Name: Upper Cut
+  atkEnergyCost: 1
   defEnergyCost: 0
   utlEnergyCost: 0
-  atkValue: 7
+  atkValue: 10
   defValue: 0
-  keywords:
-  - Reckless
-  keywordPotency: 03000000
-  targets: 000100010101000100
+  keywords: []
+  keywordPotency: 
+  targets: 000100000100000100
   frame: {fileID: 21300000, guid: 6728fc1a531712249a480e0e24a3224a, type: 3}
   gridImage: {fileID: 21300000, guid: c0543c3c81bbf804cb35b103f4697c4f, type: 3}

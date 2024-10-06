@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   characterName: Slime
-  maxHP: 5
+  maxHP: 20
   characterSprite: {fileID: 21300000, guid: eb120bb321837f146a675921448d1fb3, type: 3}
   actions:
   - {fileID: 11400000, guid: eee0ebea3e889674499d010f3f194aa2, type: 2}

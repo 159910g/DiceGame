@@ -17,4 +17,4 @@ MonoBehaviour:
   utlEnergy: 2
   effect: 0
   effectPotency: 0
-  dieBG: {fileID: -7008801, guid: b1ad84a8e964a8646bafdd464a4ec9e4, type: 3}
+  dieBG: {fileID: 187144577, guid: b1ad84a8e964a8646bafdd464a4ec9e4, type: 3}
