@@ -3434,7 +3434,7 @@ MonoBehaviour:
   characterHealth: {fileID: 94315489}
   nextAction: {fileID: 1194385240}
   hoverableAilmentPrefab: {fileID: 1587445965082486313, guid: a93af44ed2d63484480f067a930524fb, type: 3}
-  startOfAilmentSection: {x: -292, y: -77, z: 0}
+  startOfAilmentSection: {x: -140, y: -38, z: 0}
   ailmentDetails: {fileID: 677704278}
 --- !u!1 &1332890232
 GameObject:

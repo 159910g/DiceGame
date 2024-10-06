@@ -69,7 +69,7 @@ public class InfoBox : MonoBehaviour
             offsetX += ailmentText.GetRenderedValues(true).x;
             if (offsetX >= 292)
             {
-                offsetX = -60; //Second and subsequent rows are more to the left
+                offsetX = -60; //Second and subsequent rows are more to the left due to the space from the title
                 offsetY -= 30;
             }
             a.GetComponent<AilmentHover>().ailment = ailment;
