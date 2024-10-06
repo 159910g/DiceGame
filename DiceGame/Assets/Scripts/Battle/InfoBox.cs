@@ -12,8 +12,9 @@ public class InfoBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI characterHealth;
     [SerializeField] TextMeshProUGUI nextAction;
     [SerializeField] GameObject hoverableAilmentPrefab;
-    [SerializeField] Vector3 topOfAilmentSection = new Vector3(0,0,0);
+    [SerializeField] Vector3 startOfAilmentSection = new Vector3(0,0,0);
     [SerializeField] TextMeshProUGUI ailmentDetails;
+    List<GameObject> currentHoverableAilments = new List<GameObject>();
 
     public event Action OnHideInfo;
 
@@ -51,18 +52,30 @@ public class InfoBox : MonoBehaviour
         {
             nextAction.text += action.Keywords[i] + " " + action.MinKeywordPotency[i] + "-" + action.MaxKeywordPotency[i];
         }
+        int ailmentCount = 0;
         foreach (AilmentsInterface ailment in ailments.Keys)
         {
             Debug.Log(ailment);
-            GameObject a = Instantiate(hoverableAilmentPrefab, topOfAilmentSection, Quaternion.identity);
+            GameObject a = Instantiate(hoverableAilmentPrefab, startOfAilmentSection, Quaternion.identity);
             a.transform.parent = gameObject.transform;
+            a.transform.localPosition = new Vector3(
+                startOfAilmentSection.x + 100f * ailmentCount, 
+                startOfAilmentSection.y,
+                startOfAilmentSection.z
+            );
+            a.GetComponent<TextMeshProUGUI>().text = ailment.AilmentName;
             a.GetComponent<AilmentHover>().ailment = ailment;
-            topOfAilmentSection = new Vector3(topOfAilmentSection.x, topOfAilmentSection.y - 50.0f, topOfAilmentSection.z);
+            currentHoverableAilments.Add(a);
+            ailmentCount++;
         }
     }
 
     public void HideInfo()
     {
+        foreach (GameObject ailment in currentHoverableAilments)
+        {
+            Destroy(ailment);
+        }
         ailmentDetails.text = "";
         container.SetActive(false);
         OnHideInfo?.Invoke();
@@ -71,5 +84,10 @@ public class InfoBox : MonoBehaviour
     public void ShowAilmentDetails(AilmentsInterface ailment)
     {
         ailmentDetails.text = ailment.AilmentIcon + " " + ailment.AilmentName + "\n\n" + ailment.AilmentDescription;
+    }
+
+    public void HideAilmentDetails()
+    {
+        ailmentDetails.text = "";
     }
 }
