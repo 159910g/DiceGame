@@ -18,6 +18,7 @@ MonoBehaviour:
   maxAtkValue: 5
   minDefValue: 0
   maxDefValue: 0
+  actionIndicator: {fileID: 1279831797, guid: 0d1f3972ee4a759448ca48809e8a6989, type: 3}
   enemyTargets: 
   targetsPlayer: 1
   keywords: []
