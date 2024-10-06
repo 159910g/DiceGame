@@ -14,6 +14,8 @@ public class EnemyAction : ScriptableObject
     [SerializeField] int minDefValue;
     [SerializeField] int maxDefValue;
 
+    [SerializeField] Sprite actionIndicator;
+
     //1 2 3
     //4 5 6
     //7 8 9
@@ -78,5 +80,10 @@ public class EnemyAction : ScriptableObject
     public List<int> MaxKeywordPotency
     {
         get { return maxKeywordPotency; }
+    }
+
+    public Sprite ActionIndicator
+    {
+        get { return actionIndicator; }
     }
 }

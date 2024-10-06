@@ -9,7 +9,11 @@ public class BleedAilment : MonoBehaviour, AilmentsInterface
 
     [SerializeField] Sprite ailmentIcon;
 
+    [SerializeField] AilmentTriggerCondition triggerCondition;
+
     public string AilmentName { get => ailmentName; }  // Property for the keyword's name
+
+    public string TriggerCondition { get => triggerCondition.ToString(); }
 
     public string AilmentDescription { get => ailmentDescription; }  // Property for the keyword's description
     

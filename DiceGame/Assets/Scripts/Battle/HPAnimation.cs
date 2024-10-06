@@ -8,11 +8,6 @@ public class HPAnimation : MonoBehaviour
     public Slider damageBar; // Reference to the HP bar (Slider UI element)
     public Image damageBarFill;
     public float fadeDuration = 1.0f; // Time for fading the health bar
-    public float repeatDelay = 0.5f; // Time between fading to target and returning to current HP
-
-    private float healthLost;
-    private float maxHealth;
-
     float originalAlpha;
 
     private Color originalColor;
@@ -23,12 +18,11 @@ public class HPAnimation : MonoBehaviour
     public void FadeHP(float HPafterATK)
     {
         originalColor = damageBarFill.color;
-        this.maxHealth = damageBar.maxValue; // Assuming max health is already set on the HP bar
         originalAlpha = 1f;
 
         StopDmgFade();
 
-        damageBar.value = maxHealth - HPafterATK;
+        damageBar.value = damageBar.maxValue - HPafterATK;
         fade = StartCoroutine(FadeDmgBar());
     }
 

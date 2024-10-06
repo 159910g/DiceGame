@@ -33,12 +33,15 @@ public class SpawnableCardsLocations : MonoBehaviour
 
     public void ReorientCardsInHand(List<SpawnableCard> cardsInHand)
     {
-        List<Vector2> spawnLocations =  SpawnLocations(cardsInHand.Count);
-
-        for(int i=0; i < cardsInHand.Count; i++)
+        if(cardsInHand.Count > 0)
         {
-            //Z component visually layers cards with the rightmost on top
-            cardsInHand[i].transform.position = new Vector3(spawnLocations[i].x, spawnLocations[i].y, 1f-(0.1f * i));
+            List<Vector2> spawnLocations =  SpawnLocations(cardsInHand.Count);
+
+            for(int i=0; i < cardsInHand.Count; i++)
+            {
+                //Z component visually layers cards with the rightmost on top
+                cardsInHand[i].transform.position = new Vector3(spawnLocations[i].x, spawnLocations[i].y, 1f-(0.1f * i));
+            }
         }
     }
 }
