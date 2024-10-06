@@ -33,7 +33,7 @@ public class InfoBox : MonoBehaviour
         }
     }
 
-    public void SetInfo(string charName, int currHealth, int maxHealth, EnemyAction action, Dictionary<AilmentsInterface, int> ailments)
+    public void SetInfo(string charName, int currHealth, int maxHealth, EnemyAction action, Dictionary<AilmentsInterface, int> ailmentsPotency)
     {
         HideInfo();
         container.SetActive(true);
@@ -52,21 +52,28 @@ public class InfoBox : MonoBehaviour
         {
             nextAction.text += action.Keywords[i] + " " + action.MinKeywordPotency[i] + "-" + action.MaxKeywordPotency[i];
         }
-        int ailmentCount = 0;
-        foreach (AilmentsInterface ailment in ailments.Keys)
+        float offsetX = 0f; //Track where next word should start
+        float offsetY = 0f;
+        foreach (AilmentsInterface ailment in ailmentsPotency.Keys)
         {
             Debug.Log(ailment);
             GameObject a = Instantiate(hoverableAilmentPrefab, startOfAilmentSection, Quaternion.identity);
             a.transform.parent = gameObject.transform;
             a.transform.localPosition = new Vector3(
-                startOfAilmentSection.x + 100f * ailmentCount, 
-                startOfAilmentSection.y,
+                startOfAilmentSection.x + startOfAilmentSection.x + offsetX, 
+                startOfAilmentSection.y + startOfAilmentSection.y + offsetY,
                 startOfAilmentSection.z
             );
-            a.GetComponent<TextMeshProUGUI>().text = ailment.AilmentName;
+            TextMeshProUGUI ailmentText = a.GetComponent<TextMeshProUGUI>();
+            ailmentText.text = ailment.AilmentName + ailmentsPotency[ailment];
+            offsetX += ailmentText.GetRenderedValues(true).x;
+            if (offsetX >= 292)
+            {
+                offsetX = -60; //Second and subsequent rows are more to the left
+                offsetY -= 30;
+            }
             a.GetComponent<AilmentHover>().ailment = ailment;
             currentHoverableAilments.Add(a);
-            ailmentCount++;
         }
     }
 
