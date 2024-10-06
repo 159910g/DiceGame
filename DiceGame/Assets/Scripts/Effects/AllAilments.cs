@@ -27,4 +27,15 @@ public class AllAilments : MonoBehaviour
 
         return null;
     }
+
+    public string SearchTriggerCondition(string input)
+    {
+        for(int i=0; i < ailments.Length; i++)
+        {
+            if(ailments[i].AilmentName == input)
+                return ailments[i].TriggerCondition;
+        }
+
+        return null;
+    }
 }

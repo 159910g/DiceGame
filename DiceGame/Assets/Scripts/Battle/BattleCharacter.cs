@@ -99,27 +99,31 @@ public class BattleCharacter : MonoBehaviour
         return false;
     }
 
-    public void TriggerAilments()
+    public void TriggerAilments(string timing)
     {
         foreach (AilmentsInterface ailment in statusAilments.Keys)
         {
-            Debug.Log("Triggering " + ailment);
-            ailment.AilmentEffect(statusAilments[ailment], this);
+            if(timing == ailment.TriggerCondition)
+            {
+                Debug.Log("Triggering " + ailment);
+                ailment.AilmentEffect(statusAilments[ailment], this);
+            }
         }
 
-        foreach (AilmentsInterface toCure in ailmentsToCure)
-        {
-            statusAilments.Remove(toCure);
-        }
+        //foreach (AilmentsInterface toCure in ailmentsToCure)
+        //{
+        //    statusAilments.Remove(toCure);
+        //}
 
-        ailmentsToCure.Clear();
+        //ailmentsToCure.Clear();
     }
 
     public void ShowHPDetails()
     {
         InfoBox.Instance.OnHideInfo += HideInfo;
 
-        if(BattleSystem.Instance.CardSelected != null)
+        //make health bar big during targetting
+        if(BattleSystem.Instance.CardSelected != null && characterBase != null)
         {
             int damage = BattleSystem.Instance.CardSelected.ATKValue;
 
@@ -128,7 +132,12 @@ public class BattleCharacter : MonoBehaviour
                 armourText.text = (currentArmour - damage).ToString();
             }
             else
-            {
+            {   
+                //if current was > 0 and the current damage would not be enough to break it
+                //then we wouldnt be in this else statement
+                if(currentArmour > 0)
+                    armourText.text = "0";
+
                 int HPafterATK = currentHP + (currentArmour - damage); //currentArmour - damage is a negative number;
                 
                 if(HPafterATK < 0)
@@ -139,6 +148,7 @@ public class BattleCharacter : MonoBehaviour
             }
         }
 
+        //make healthbar big during inspection
         else
             healthBar.GetComponentInChildren<TextMeshPro>().text = currentHP +"/"+ characterBase.MaxHP;
         

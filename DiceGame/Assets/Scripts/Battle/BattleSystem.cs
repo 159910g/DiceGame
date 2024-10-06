@@ -213,12 +213,16 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    public void TriggerEnemyAilments()
+    //timing can be A) StartOfTurn or B) EndOfTurn
+    //this can also be used by saying by checking potency within the ailment effect and saying
+    //keywords addss to status and having the ailment effect triggered at the start of every turn but
+    //also having it check if a certain potency threshold is met
+    public void TriggerEnemyAilments(AilmentTriggerCondition ATC)
     {
-        Debug.Log("Calling TriggerEnemyAilments");
+        Debug.Log("Calling TriggerEnemyAilments at "+ ATC.ToString());
         foreach (BattleCharacter enemy in enemies)
         {
-            enemy.TriggerAilments();
+            enemy.TriggerAilments(ATC.ToString());
         }
     }
 

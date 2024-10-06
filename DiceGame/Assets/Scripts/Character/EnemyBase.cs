@@ -14,10 +14,4 @@ public class EnemyBase : CharacterBase
     {
         get { return actions; }
     }
-
-    public List<Sprite> ActionIndicators
-    {
-        get { return actionIndicators; }
-    }
-
 }

@@ -10,10 +10,23 @@ public interface AilmentsInterface
     string AilmentDescription { get; }  // Property for the keyword's description
 
     Sprite AilmentIcon { get; }
+
+    string TriggerCondition { get; }
     
     //potenecy value = 0 when keyword does not require potency
     virtual void AilmentEffect(int potenecy, BattleCharacter target)
     {
         return;
     }
+}
+
+[System.Serializable]
+public enum AilmentTriggerCondition
+{
+    Potency,
+    StartOfTurn,
+    EndOfTurn,
+    OnAttck, //would be every time player plays card or enemy has an action
+    OnRecieveDamage,
+    OnRecieveHP
 }

@@ -33,7 +33,7 @@ public class EnemyScript : BattleCharacter
     {
         int index = Random.Range(0, enemyBase.Actions.Count);
         nextAction = enemyBase.Actions[index];
-        nextActionIndicator.sprite = enemyBase.ActionIndicators[index];
+        nextActionIndicator.sprite = enemyBase.Actions[index].ActionIndicator;
     }
 
     public override void ShowInfo()
