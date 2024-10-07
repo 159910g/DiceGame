@@ -40,6 +40,7 @@ public class SpawnableCardsLocations : MonoBehaviour
             for(int i=0; i < cardsInHand.Count; i++)
             {
                 //Z component visually layers cards with the rightmost on top
+                Debug.Log(1f-(0.1f * i));
                 cardsInHand[i].transform.position = new Vector3(spawnLocations[i].x, spawnLocations[i].y, 1f-(0.1f * i));
             }
         }
