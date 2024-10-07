@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Defend
   atkEnergyCost: 0
-  defEnergyCost: 2
+  defEnergyCost: 1
   utlEnergyCost: 0
   atkValue: 0
   defValue: 5

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aed4e5de03902b4ca59292722090237, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  actionName: Wait
+  description: Enemy is thinking
+  minAtkValue: 0
+  maxAtkValue: 0
+  minDefValue: 0
+  maxDefValue: 0
+  actionIndicator: {fileID: 1150177515, guid: 0d1f3972ee4a759448ca48809e8a6989, type: 3}
+  enemyTargets: 
+  targetsPlayer: 0
+  keywords: []
+  minKeywordPotency: 
+  maxKeywordPotency: 
