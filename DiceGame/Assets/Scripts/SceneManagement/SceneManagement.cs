@@ -13,11 +13,11 @@ public class SceneManagement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // Use a coroutine to load the Scene in the background
-            StartCoroutine(LoadYourAsyncScene());
+            StartCoroutine(LoadBattleScene());
         }
     }
 
-    IEnumerator LoadYourAsyncScene()
+    IEnumerator LoadBattleScene()
     {
         // The Application loads the Scene in the background as the current Scene runs.
         // This is particularly good for creating loading screens.
@@ -25,6 +25,17 @@ public class SceneManagement : MonoBehaviour
         // a sceneBuildIndex of 1 as shown in Build Settings.
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("BattleScene", LoadSceneMode.Additive);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+    
+    IEnumerator LoadShopScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShopScene", LoadSceneMode.Additive);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
