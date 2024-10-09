@@ -8,17 +8,15 @@ public class MapButton : MonoBehaviour
     public List<MapButton> antirequisites = new List<MapButton>();
     bool unlocked = false;
     bool completed = false;
-
-    void Awake()
-    {
-        if (ProgressionManager.Instance.completedEncounters[this] == true)
-        {
-            completed = true;
-        }
-    }
+    public EncounterBase encounterBase;
 
     void Start()
     {
+        if (ProgressionManager.Instance.CompletedEncounters[this])
+        {
+            completed = true;
+        }
+
         if (!completed && CheckPrerequisites() && CheckAntirequisites())
         {
             unlocked = true;
@@ -29,16 +27,20 @@ public class MapButton : MonoBehaviour
         }
     }
 
+    public void LoadEncounter()
+    {
+        SceneManagement.Instance.CallLoadScene(encounterBase);
+    }
+
     public bool CheckPrerequisites()
     {
         foreach (MapButton m in prerequisites)
         {
-            if (ProgressionManager.Instance.completedEncounters[m] == false)
+            if (ProgressionManager.Instance.CompletedEncounters[m] == false)
             {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -46,12 +48,11 @@ public class MapButton : MonoBehaviour
     {
         foreach (MapButton m in prerequisites)
         {
-            if (ProgressionManager.Instance.completedEncounters[m] == true)
+            if (ProgressionManager.Instance.CompletedEncounters[m] == true)
             {
                 return false;
             }
         }
-
         return true;
     }
 }

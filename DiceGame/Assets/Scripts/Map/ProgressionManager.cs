@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ProgressionManager : MonoBehaviour
 {
-    public Dictionary<MapButton, bool> completedEncounters = new Dictionary<MapButton, bool>();
+    private Dictionary<MapButton, bool> completedEncounters = new Dictionary<MapButton, bool>();
 
     public static ProgressionManager Instance;
+
+    public Dictionary<MapButton, bool> CompletedEncounters
+    {
+        get { return completedEncounters; }
+    }
 
     void Awake()
     {
@@ -15,6 +20,7 @@ public class ProgressionManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+        InitializeEncounters();
     }
 
     public void InitializeEncounters()
