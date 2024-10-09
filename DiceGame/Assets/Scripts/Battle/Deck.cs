@@ -12,6 +12,8 @@ public class Deck : MonoBehaviour
 
     public List<Card> ShuffledDeck = new List<Card>();
 
+    public List<SpawnableCard> Graveyard = new List<SpawnableCard>(); 
+
     public List<SpawnableCard> spawnedDeck = new List<SpawnableCard>();
 
     public static Deck Instance { get; private set; }
@@ -68,10 +70,33 @@ public class Deck : MonoBehaviour
 
     public SpawnableCard Draw(int index=0)
     {
+        Debug.Log("spawnedDeck.Count = "+ spawnedDeck.Count);
+        if(spawnedDeck.Count == 0)
+            ResetDeck();
         spawnedDeck[index].gameObject.SetActive(true);
         SpawnableCard cardDrawn = spawnedDeck[index];
         spawnedDeck.RemoveAt(index);
         return cardDrawn;
+    }
+
+    public void ToGraveyard(SpawnableCard card)
+    {
+        Graveyard.Add(card);
+    }
+
+    public void ResetDeck()
+    {
+        Debug.Log("Reset Deck");
+
+        //for(int i = (Graveyard.Count - 1); i >= 0; i--)
+        //{
+        //    Debug.Log("here");
+        //    Destroy(Graveyard[i]);
+        //}
+
+        spawnedDeck.Clear();
+        //Graveyard.Clear();
+        StartBattle();
     }
 
 }
