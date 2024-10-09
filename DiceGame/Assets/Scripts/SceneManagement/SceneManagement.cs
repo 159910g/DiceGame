@@ -4,27 +4,31 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
 {
-    private void Start() {
+    public static SceneManagement Instance;
+    public EncounterBase currentEncounter;
+    private void Start() 
+    {
+        if (Instance == null) Instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
-    void Update()
+
+    public void CallLoadScene(EncounterBase encounter)
     {
-        // Press the space key to start coroutine
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Use a coroutine to load the Scene in the background
-            StartCoroutine(LoadYourAsyncScene());
-        }
+        StartCoroutine(LoadAsyncScene(encounter));
     }
 
-    IEnumerator LoadYourAsyncScene()
+    IEnumerator LoadAsyncScene(EncounterBase encounter)
     {
-        // The Application loads the Scene in the background as the current Scene runs.
-        // This is particularly good for creating loading screens.
-        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
-        // a sceneBuildIndex of 1 as shown in Build Settings.
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("BattleScene", LoadSceneMode.Additive);
+    // The Application loads the Scene in the background as the current Scene runs.
+        currentEncounter = encounter;
+        foreach (Scene s in SceneManager.GetAllScenes())
+        {
+            if (s.name != "MasterScene")
+            {
+                SceneManager.UnloadScene(s);
+            }
+        }
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(encounter.BaseScene, LoadSceneMode.Additive);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

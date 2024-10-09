@@ -618,7 +618,6 @@ MonoBehaviour:
   damageBar: {fileID: 977844418978752989}
   damageBarFill: {fileID: 8347493424245740860}
   fadeDuration: 1
-  repeatDelay: 0.5
 --- !u!1 &6514684172718310924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,8 +1269,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -266321403
-  m_SortingLayer: 2
+  m_SortingLayerID: 1887598129
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 1279831797, guid: 0d1f3972ee4a759448ca48809e8a6989, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

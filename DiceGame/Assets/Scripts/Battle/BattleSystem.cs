@@ -68,6 +68,11 @@ public class BattleSystem : MonoBehaviour
         if (cardDeselectEvent == null) cardDeselectEvent = new UnityEvent();
         NPopup = GetComponent<NotificationPopupController>();
         cardsInHand = new List<SpawnableCard>();
+        for (int i=0; i<enemies.Count; i++)
+        {
+            enemies[i].characterBase = null;
+            enemies[i].characterBase = ((BattleBase)SceneManagement.Instance.currentEncounter).Enemies[i];
+        }
     }
 
     public void Start()
@@ -93,7 +98,7 @@ public class BattleSystem : MonoBehaviour
 
     public void Draw(int deckPos=0)
     {
-        if(cardsInHand.Count < 10 && Deck.Instance.spawnedDeck.Count > 0)
+        if(cardsInHand.Count < 10)
         {
             cardsInHand.Add(Deck.Instance.Draw(deckPos));
             SpawnableCardsLocations.Instance.ReorientCardsInHand(cardsInHand);
@@ -181,6 +186,7 @@ public class BattleSystem : MonoBehaviour
 
                 //removing card from hand, reorienting hand, misc
                 cardsInHand[i].gameObject.SetActive(false);
+                Deck.Instance.ToGraveyard(cardsInHand[i]);
                 cardsInHand.RemoveAt(i);
                 cardSelected = null;
                 TargetHandler.Instance.TurnOffAllTargets();

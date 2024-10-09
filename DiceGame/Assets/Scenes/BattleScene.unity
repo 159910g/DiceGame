@@ -2211,7 +2211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &695548421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2432,7 +2432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &833766245
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3208,7 +3208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1250755566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3495,7 +3495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1332890233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3521,6 +3521,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9da183fd6fb13547a3a8ec7b521ea0c, type: 2}
   - {fileID: 11400000, guid: a000f73ecc1933341858fd8d3f5bad53, type: 2}
   cardTemplate: {fileID: 7462937598480526223, guid: f7eafe5e981bbc14d8f8fed7e4e94800, type: 3}
+  Graveyard: []
   spawnedDeck: []
 --- !u!114 &1332890234
 MonoBehaviour:
