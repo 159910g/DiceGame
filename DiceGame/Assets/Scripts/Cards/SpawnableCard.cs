@@ -107,7 +107,7 @@ public class SpawnableCard : MonoBehaviour
     public void SetIsSelected(bool value)
     {
         isSelected = value;
-
+        
         if(value)
         {
             foreach(TextMeshPro k in Keywords)
@@ -133,15 +133,18 @@ public class SpawnableCard : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(bc.enabled)
+        if(BattleSystem.Instance != null)
         {
-            if(BattleSystem.Instance.state != BattleState.PlayerTurn)   
-                bc.enabled = false;
-        }
-        if(!bc.enabled)
-        {
-            if(BattleSystem.Instance.state == BattleState.PlayerTurn)   
-                bc.enabled = true;
+            if(bc.enabled)
+            {
+                if(BattleSystem.Instance.state != BattleState.PlayerTurn)   
+                    bc.enabled = false;
+            }
+            if(!bc.enabled)
+            {
+                if(BattleSystem.Instance.state == BattleState.PlayerTurn)   
+                    bc.enabled = true;
+            }
         }
 
         if (Input.GetKey(KeyCode.Mouse1))
@@ -152,7 +155,9 @@ public class SpawnableCard : MonoBehaviour
 
     public void DeselectCard()
     {
-        BattleSystem.Instance.ClearCardSelected();
+        if(BattleSystem.Instance != null)
+            BattleSystem.Instance.ClearCardSelected();
+
         Debug.Log("Pressed Right Click");
         SetIsSelected(false);
         StartCoroutine(ReturnCard());
@@ -197,7 +202,12 @@ public class SpawnableCard : MonoBehaviour
     {
         if (!isSelected)
         {
-            BattleSystem.Instance.SelectCard(this);
+            if(BattleSystem.Instance != null)
+                BattleSystem.Instance.SelectCard(this);
+
+            if(CardShop.Instance != null)
+                CardShop.Instance.SelectCard(this);
+                
             if (isSelected) transform.DOMoveZ(startPos.z - 5f, 0.01f);
         }
     }
