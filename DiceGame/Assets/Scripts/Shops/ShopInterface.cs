@@ -23,4 +23,9 @@ public interface ShopInterface
     {
         return;
     }
+
+    virtual void Enter()
+    {
+        return;
+    }
 }
