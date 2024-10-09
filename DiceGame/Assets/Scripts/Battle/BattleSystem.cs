@@ -68,6 +68,11 @@ public class BattleSystem : MonoBehaviour
         if (cardDeselectEvent == null) cardDeselectEvent = new UnityEvent();
         NPopup = GetComponent<NotificationPopupController>();
         cardsInHand = new List<SpawnableCard>();
+        for (int i=0; i<enemies.Count; i++)
+        {
+            enemies[i].characterBase = null;
+            enemies[i].characterBase = ((BattleBase)SceneManagement.Instance.currentEncounter).Enemies[i];
+        }
     }
 
     public void Start()

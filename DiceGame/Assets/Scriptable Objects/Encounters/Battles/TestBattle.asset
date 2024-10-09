@@ -14,4 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseScene: BattleScene
   backgroundImage: {fileID: 0}
-  enemies: []
+  enemies:
+  - {fileID: 11400000, guid: 22ac69dbaef985f41a459430bc13806b, type: 2}
+  - {fileID: 11400000, guid: 22ac69dbaef985f41a459430bc13806b, type: 2}
+  - {fileID: 11400000, guid: 495099075f70d064a9a6d38a32f17fcb, type: 2}
+  - {fileID: 11400000, guid: 495099075f70d064a9a6d38a32f17fcb, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

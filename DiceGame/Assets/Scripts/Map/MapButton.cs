@@ -12,7 +12,7 @@ public class MapButton : MonoBehaviour
 
     void Start()
     {
-        if (ProgressionManager.Instance.CompletedEncounters[this])
+        if (ProgressionManager.Instance.CompletedEncounters.ContainsKey(this) && ProgressionManager.Instance.CompletedEncounters[this])
         {
             completed = true;
         }
